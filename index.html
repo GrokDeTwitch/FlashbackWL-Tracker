@@ -3,352 +3,868 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Twitch Tracker</title>
+<title>FlashbackWL - Tracker</title>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --tw-purple:#9147ff;--tw-purple-dark:#6b2fb8;--tw-purple-light:#bf94ff;
-  --bg:#0e0e10;--bg2:#18181b;--bg3:#1f1f23;--bg4:#26262c;
-  --text:#efeff1;--text2:#adadb8;--text3:#6b6b77;
+  --tw:#9147ff;--tw-dark:#6b2fb8;--tw-light:#bf94ff;
   --live:#ff4747;--online:#00b26e;
-  --radius:8px;--font:'Outfit',sans-serif;
+  --r:8px;--f:'Outfit',sans-serif;
 }
-body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;padding:24px 20px}
-h2{font-size:18px;font-weight:500}
-.app-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid #2a2a30}
-.logo{display:flex;align-items:center;gap:10px;font-size:20px;font-weight:700;color:var(--tw-purple-light)}
-.logo svg{width:28px;height:28px}
-.refresh-btn{background:none;border:1px solid #3a3a42;color:var(--text2);border-radius:var(--radius);padding:6px 12px;font-size:12px;cursor:pointer;font-family:var(--font);display:flex;align-items:center;gap:6px}
-.refresh-btn:hover{border-color:var(--tw-purple);color:var(--text)}
-.stats-bar{display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap}
-.stat{background:var(--bg2);border:1px solid #2a2a30;border-radius:var(--radius);padding:12px 18px;flex:1;min-width:120px}
-.stat-label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
-.stat-value{font-size:22px;font-weight:700;color:var(--text)}
-.stat-value.live-col{color:var(--live)}
-.stat-value.online-col{color:var(--online)}
+body.dark{--bg:#0e0e10;--bg2:#18181b;--bg3:#1f1f23;--bg4:#26262c;--bd:#2a2a30;--bd2:#3a3a42;--t:#efeff1;--t2:#adadb8;--t3:#6b6b77}
+body.light{--bg:#f0eff5;--bg2:#ffffff;--bg3:#f5f4f8;--bg4:#e8e6f0;--bd:#dddbe8;--bd2:#c8c5d8;--t:#1a1a1f;--t2:#555566;--t3:#9999aa}
+body{font-family:var(--f);background:var(--bg);color:var(--t);min-height:100vh;padding:22px 20px;transition:background .2s,color .2s}
+
+/* ── HEADER ── */
+.hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;padding-bottom:14px;border-bottom:1px solid var(--bd);gap:10px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:9px;font-size:19px;font-weight:700;color:var(--tw-light)}
+body.light .logo{color:var(--tw-dark)}
+.logo svg{width:26px;height:26px}
+.hdr-right{display:flex;align-items:center;gap:8px}
+.icon-btn{background:none;border:1px solid var(--bd2);color:var(--t2);border-radius:var(--r);padding:6px 11px;font-size:12px;cursor:pointer;font-family:var(--f);display:flex;align-items:center;gap:5px;transition:border-color .15s,color .15s}
+.icon-btn:hover{border-color:var(--tw);color:var(--t)}
+.icon-btn svg{width:13px;height:13px}
+.notif-btn{position:relative}
+.notif-dot{position:absolute;top:4px;right:4px;width:7px;height:7px;border-radius:50%;background:var(--live);display:none;border:2px solid var(--bg)}
+.notif-dot.show{display:block}
+
+/* ── PROFILE ── */
+.profile-wrap{position:relative}
+.profile-btn{width:36px;height:36px;border-radius:50%;border:2px solid var(--tw);overflow:hidden;cursor:pointer;background:none;padding:0;display:block}
+.profile-btn:hover{border-color:var(--tw-light)}
+.profile-btn img{width:100%;height:100%;object-fit:cover;display:block}
+.dropdown{position:absolute;top:calc(100% + 8px);right:0;background:var(--bg2);border:1px solid var(--bd2);border-radius:12px;min-width:210px;overflow:hidden;z-index:400;box-shadow:0 8px 32px rgba(0,0,0,.4);display:none}
+.dropdown.open{display:block}
+.dd-hdr{padding:13px 15px;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:9px}
+.dd-av{width:34px;height:34px;border-radius:50%;overflow:hidden;flex-shrink:0}
+.dd-av img{width:100%;height:100%;object-fit:cover}
+.dd-name{font-size:13px;font-weight:600;color:var(--t)}
+.dd-login{font-size:11px;color:var(--t3)}
+.dd-items{padding:5px 0}
+.dd-item{display:flex;align-items:center;gap:9px;padding:9px 15px;font-size:13px;color:var(--t2);cursor:pointer;background:none;border:none;width:100%;text-align:left;font-family:var(--f);transition:background .12s}
+.dd-item:hover{background:var(--bg3);color:var(--t)}
+.dd-item svg{width:14px;height:14px;flex-shrink:0;opacity:.65}
+.dd-sep{height:1px;background:var(--bd);margin:3px 0}
+.dd-item.red{color:#ff5555}
+.dd-item.red:hover{background:#ff444412;color:#ff5555}
+
+/* ── STATS ── */
+.stats{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap}
+.stat{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--r);padding:11px 16px;flex:1;min-width:110px}
+.stat-l{font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px}
+.stat-v{font-size:21px;font-weight:700;color:var(--t)}
+.stat-v.rc{color:var(--live)}.stat-v.gc{color:var(--online)}
 .pulse{animation:pulse 2s ease-in-out infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
-.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
-.add-btn{display:flex;align-items:center;gap:6px;background:var(--tw-purple);color:#fff;border:none;border-radius:var(--radius);padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font)}
-.add-btn:hover{background:var(--tw-purple-dark)}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-bottom:28px}
-.card{background:var(--bg2);border:1px solid #2a2a30;border-radius:12px;overflow:hidden;transition:border-color .2s,transform .15s}
-.card:hover{border-color:#9147ff88;transform:translateY(-2px)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}
+
+/* ── TABS / SEARCH ── */
+.toolbar{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.tabs{display:flex;gap:4px;flex:1;flex-wrap:wrap}
+.tab{padding:6px 13px;font-size:12px;font-weight:600;border-radius:20px;cursor:pointer;border:1px solid var(--bd2);background:none;color:var(--t2);font-family:var(--f);transition:all .15s;white-space:nowrap}
+.tab.active{background:var(--tw);color:#fff;border-color:var(--tw)}
+.tab:hover:not(.active){border-color:var(--tw);color:var(--tw-light)}
+body.light .tab:hover:not(.active){color:var(--tw-dark)}
+.tab-add{padding:5px 10px;font-size:11px;background:none;border:1px dashed var(--bd2);color:var(--t3);border-radius:20px;cursor:pointer;font-family:var(--f)}
+.tab-add:hover{border-color:var(--tw);color:var(--tw)}
+.search-wrap{position:relative;flex-shrink:0}
+.search-wrap svg{position:absolute;left:9px;top:50%;transform:translateY(-50%);width:13px;height:13px;fill:none;stroke:var(--t3);stroke-width:2;pointer-events:none}
+.search-input{background:var(--bg3);border:1px solid var(--bd);color:var(--t);border-radius:20px;padding:6px 12px 6px 30px;font-size:13px;font-family:var(--f);outline:none;width:180px;transition:border-color .15s}
+.search-input:focus{border-color:var(--tw)}
+.search-input::placeholder{color:var(--t3)}
+
+/* ── TOP BAR ── */
+.sec-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.add-btn{display:flex;align-items:center;gap:5px;background:var(--tw);color:#fff;border:none;border-radius:var(--r);padding:7px 13px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--f)}
+.add-btn:hover{background:var(--tw-dark)}
+
+/* ── GRID ── */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin-bottom:24px}
+.card{background:var(--bg2);border:1px solid var(--bd);border-radius:11px;overflow:hidden;transition:border-color .2s,transform .15s}
+.card:hover{border-color:#9147ff77;transform:translateY(-2px)}
+
+/* ── THUMB ── */
 .thumb{width:100%;aspect-ratio:16/9;background:var(--bg3);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
-.thumb.clickable{cursor:pointer}
-.thumb-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center}
-.thumb-placeholder svg{width:40px;height:40px;opacity:.15;fill:var(--text2)}
-.thumb-live-bg{width:100%;height:100%;display:flex;align-items:center;justify-content:center}
-.play-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.35);opacity:0;transition:opacity .2s}
-.thumb.clickable:hover .play-overlay{opacity:1}
-.play-circle{width:52px;height:52px;border-radius:50%;background:var(--tw-purple);display:flex;align-items:center;justify-content:center;box-shadow:0 0 20px #9147ff66}
-.play-circle svg{width:22px;height:22px;fill:#fff;margin-left:3px}
-.live-badge{position:absolute;top:8px;left:8px;background:var(--live);color:#fff;font-size:11px;font-weight:700;padding:2px 7px;border-radius:4px;letter-spacing:.05em;font-family:var(--font)}
-.viewers-badge{position:absolute;bottom:8px;left:8px;background:rgba(0,0,0,.75);color:#fff;font-size:11px;padding:2px 7px;border-radius:4px;display:flex;align-items:center;gap:4px;font-family:var(--font)}
-.dot-red{width:6px;height:6px;border-radius:50%;background:var(--live);display:inline-block;flex-shrink:0}
-.card-body{padding:12px}
-.card-top{display:flex;align-items:center;gap:10px;margin-bottom:8px}
-.avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0}
-.card-name{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.card-status{font-size:11px;color:var(--online);font-weight:500}
-.card-status.offline{color:var(--text3)}
-.card-game{font-size:12px;color:var(--text2);margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.card-title-text{font-size:11px;color:var(--text3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.remove-btn{background:none;border:none;cursor:pointer;color:var(--text3);font-size:16px;padding:2px 6px;border-radius:4px;line-height:1;margin-left:auto;flex-shrink:0}
-.remove-btn:hover{background:var(--bg4);color:#ff4747}
-.card-footer{padding:0 12px 10px;display:flex;justify-content:space-between;align-items:center}
-.watch-btn{font-size:11px;font-weight:600;color:var(--tw-purple-light);background:none;border:1px solid #9147ff44;padding:4px 10px;border-radius:5px;cursor:pointer;font-family:var(--font)}
-.watch-btn:hover{background:#9147ff22}
-.empty{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:48px 24px;background:var(--bg2);border:1px dashed #3a3a42;border-radius:12px;color:var(--text3);font-size:14px;text-align:center;grid-column:1/-1}
-.note{background:var(--bg2);border:1px solid #2a2a30;border-radius:var(--radius);padding:10px 14px;font-size:12px;color:var(--text3);margin-bottom:20px;line-height:1.7}
-.note strong{color:var(--text2)}
-/* ADD MODAL */
-.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:100;align-items:center;justify-content:center}
-.modal-bg.open{display:flex}
-.modal{background:var(--bg2);border:1px solid #3a3a42;border-radius:14px;padding:24px;width:340px;max-width:90vw}
-.modal h3{font-size:16px;font-weight:600;margin-bottom:16px;color:var(--text)}
-.modal input{width:100%;background:var(--bg3);border:1px solid #3a3a42;color:var(--text);border-radius:var(--radius);padding:10px 12px;font-size:14px;font-family:var(--font);outline:none;margin-bottom:12px}
-.modal input:focus{border-color:var(--tw-purple)}
-.modal-btns{display:flex;gap:8px;justify-content:flex-end}
-.modal-btns button{padding:8px 16px;border-radius:var(--radius);font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font);border:none}
-.btn-cancel{background:var(--bg4);color:var(--text2)}
-.btn-add{background:var(--tw-purple);color:#fff}
-.btn-add:hover{background:var(--tw-purple-dark)}
-/* PLAYER OVERLAY */
-.player-overlay{display:none;position:fixed;inset:0;background:#0a0a0c;z-index:200;flex-direction:column}
-.player-overlay.open{display:flex}
-.player-header{display:flex;align-items:center;justify-content:space-between;padding:12px 20px;border-bottom:1px solid #2a2a30;flex-shrink:0;gap:12px;flex-wrap:wrap}
-.player-info{display:flex;align-items:center;gap:12px;flex:1;min-width:0}
-.player-avatar{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0}
-.player-name{font-size:15px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.player-meta{font-size:12px;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.player-live-badge{background:var(--live);color:#fff;font-size:11px;font-weight:700;padding:3px 8px;border-radius:4px;letter-spacing:.05em;flex-shrink:0}
-.player-viewers{font-size:12px;color:var(--text2);display:flex;align-items:center;gap:5px;flex-shrink:0}
-.player-actions{display:flex;align-items:center;gap:8px;flex-shrink:0}
-.player-twitch-link{font-size:12px;color:var(--tw-purple-light);text-decoration:none;border:1px solid #9147ff44;padding:6px 12px;border-radius:6px;font-family:var(--font);font-weight:500}
-.player-twitch-link:hover{background:#9147ff22}
-.player-close{background:none;border:1px solid #3a3a42;color:var(--text2);border-radius:var(--radius);padding:6px 12px;font-size:13px;cursor:pointer;font-family:var(--font);font-weight:500}
-.player-close:hover{border-color:#ff4747;color:#ff4747}
-.player-body{display:flex;flex:1;overflow:hidden}
-.player-stream{flex:1;background:#000;position:relative}
-.player-stream iframe{width:100%;height:100%;border:none;display:block}
-.player-chat-panel{width:300px;flex-shrink:0;border-left:1px solid #2a2a30;display:flex;flex-direction:column;background:var(--bg2)}
-.chat-label{padding:10px 14px;border-bottom:1px solid #2a2a30;font-size:13px;font-weight:600;color:var(--text2);display:flex;align-items:center;gap:6px;flex-shrink:0}
-.player-chat-panel iframe{flex:1;border:none;width:100%;height:calc(100% - 40px)}
-.domain-warning{padding:16px;font-size:12px;color:var(--text3);line-height:1.6;text-align:center}
-.domain-warning strong{color:var(--text2);display:block;margin-bottom:6px}
-.spin{animation:spin .7s linear infinite}
+.thumb.click{cursor:pointer}
+.thumb img.stream-thumb{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}
+.thumb.click:hover img.stream-thumb{transform:scale(1.04)}
+.thumb-ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center}
+.thumb-ph svg{width:38px;height:38px;opacity:.12;fill:var(--t2)}
+.play-ov{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.38);opacity:0;transition:opacity .2s}
+.thumb.click:hover .play-ov{opacity:1}
+.play-c{width:50px;height:50px;border-radius:50%;background:var(--tw);display:flex;align-items:center;justify-content:center}
+.play-c svg{width:20px;height:20px;fill:#fff;margin-left:3px}
+.live-badge{position:absolute;top:7px;left:7px;background:var(--live);color:#fff;font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px;letter-spacing:.05em}
+.vw-badge{position:absolute;bottom:7px;left:7px;background:rgba(0,0,0,.72);color:#fff;font-size:10px;padding:2px 6px;border-radius:4px;display:flex;align-items:center;gap:3px}
+.dot-r{width:5px;height:5px;border-radius:50%;background:var(--live);flex-shrink:0}
+
+/* ── CARD BODY ── */
+.cb{padding:11px}
+.ct{display:flex;align-items:center;gap:9px;margin-bottom:7px}
+.av{width:34px;height:34px;border-radius:50%;overflow:hidden;flex-shrink:0;background:var(--bg4);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px}
+.av img{width:100%;height:100%;object-fit:cover;display:block}
+.cname{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--t)}
+.cst{font-size:11px;color:var(--online);font-weight:500}
+.cst.off{color:var(--t3)}
+.cgame{font-size:11px;color:var(--t2);margin-bottom:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ctitle{font-size:10px;color:var(--t3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rm-btn{background:none;border:none;cursor:pointer;color:var(--t3);font-size:15px;padding:2px 5px;border-radius:4px;margin-left:auto;flex-shrink:0}
+.rm-btn:hover{background:var(--bg4);color:#ff4747}
+.cf{padding:0 11px 9px;display:flex;justify-content:space-between;align-items:center}
+.watch-btn{font-size:11px;font-weight:600;color:var(--tw-light);background:none;border:1px solid #9147ff44;padding:3px 9px;border-radius:5px;cursor:pointer;font-family:var(--f)}
+body.light .watch-btn{color:var(--tw-dark)}
+.watch-btn:hover{background:#9147ff1a}
+.cat-tag{font-size:10px;padding:2px 7px;border-radius:10px;font-weight:600;cursor:pointer}
+
+/* ── EMPTY ── */
+.empty{display:flex;flex-direction:column;align-items:center;gap:10px;padding:44px 20px;background:var(--bg2);border:1px dashed var(--bd2);border-radius:11px;color:var(--t3);font-size:13px;text-align:center;grid-column:1/-1}
+
+/* ── LOGIN ── */
+.login-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 20px;gap:18px;text-align:center}
+.login-screen svg.big{width:60px;height:60px;fill:var(--tw);opacity:.65}
+.login-screen h1{font-size:26px;font-weight:700;color:var(--t)}
+.login-screen p{font-size:14px;color:var(--t2);max-width:360px;line-height:1.6}
+.login-btn{display:flex;align-items:center;gap:8px;background:var(--tw);color:#fff;border:none;border-radius:var(--r);padding:11px 24px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--f)}
+.login-btn:hover{background:var(--tw-dark)}
+.login-btn svg{width:16px;height:16px;fill:currentColor}
+
+/* ── MODALS ── */
+.mbg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:200;align-items:center;justify-content:center}
+.mbg.open{display:flex}
+.mbox{background:var(--bg2);border:1px solid var(--bd2);border-radius:13px;padding:22px;width:340px;max-width:92vw}
+.mbox h3{font-size:15px;font-weight:600;margin-bottom:14px;color:var(--t)}
+.mbox p{font-size:13px;color:var(--t2);margin-bottom:18px;line-height:1.5}
+.minput{width:100%;background:var(--bg3);border:1px solid var(--bd2);color:var(--t);border-radius:var(--r);padding:9px 11px;font-size:13px;font-family:var(--f);outline:none;margin-bottom:10px}
+.minput:focus{border-color:var(--tw)}
+.minput::placeholder{color:var(--t3)}
+.mbtns{display:flex;gap:7px;justify-content:flex-end}
+.mbtns button{padding:7px 14px;border-radius:var(--r);font-size:12px;font-weight:600;cursor:pointer;font-family:var(--f);border:none}
+.bcl{background:var(--bg4);color:var(--t2)}
+.bpr{background:var(--tw);color:#fff}
+.bpr:hover{background:var(--tw-dark)}
+.bdng{background:#ff4747;color:#fff}
+
+/* ── PLAYER ── */
+.player-ov{display:none;position:fixed;inset:0;background:#09090b;z-index:300;flex-direction:column}
+.player-ov.open{display:flex}
+.ph{display:flex;align-items:center;justify-content:space-between;padding:11px 18px;border-bottom:1px solid var(--bd);flex-shrink:0;background:var(--bg2);gap:10px;flex-wrap:wrap}
+.pi{display:flex;align-items:center;gap:10px;flex:1;min-width:0}
+.p-av{width:34px;height:34px;border-radius:50%;overflow:hidden;flex-shrink:0}
+.p-av img{width:100%;height:100%;object-fit:cover}
+.pname{font-size:14px;font-weight:600;color:var(--t);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pmeta{font-size:11px;color:var(--t2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.plive{background:var(--live);color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;flex-shrink:0}
+.pvw{font-size:11px;color:var(--t2);display:flex;align-items:center;gap:4px;flex-shrink:0}
+.pa{display:flex;align-items:center;gap:7px;flex-shrink:0}
+.ptl{font-size:11px;color:var(--tw-light);text-decoration:none;border:1px solid #9147ff44;padding:5px 10px;border-radius:5px;font-family:var(--f);font-weight:500}
+.ptl:hover{background:#9147ff1a}
+.pcl{background:none;border:1px solid var(--bd2);color:var(--t2);border-radius:var(--r);padding:5px 11px;font-size:12px;cursor:pointer;font-family:var(--f);font-weight:500}
+.pcl:hover{border-color:#ff4747;color:#ff4747}
+.pb{display:flex;flex:1;overflow:hidden}
+.ps{flex:1;background:#000}
+.ps iframe{width:100%;height:100%;border:none;display:block}
+.pch{width:295px;flex-shrink:0;border-left:1px solid var(--bd);display:flex;flex-direction:column;background:var(--bg2)}
+.pch-hdr{padding:9px 13px;border-bottom:1px solid var(--bd);font-size:12px;font-weight:600;color:var(--t2);display:flex;align-items:center;gap:5px;flex-shrink:0}
+.pch iframe{flex:1;border:none;width:100%;height:calc(100% - 36px)}
+
+/* ── NOTIFICATIONS PANEL ── */
+.notif-panel{position:absolute;top:calc(100% + 8px);right:0;background:var(--bg2);border:1px solid var(--bd2);border-radius:12px;width:300px;max-height:400px;overflow-y:auto;z-index:400;box-shadow:0 8px 32px rgba(0,0,0,.4);display:none}
+.notif-panel.open{display:block}
+.np-hdr{padding:12px 14px;border-bottom:1px solid var(--bd);font-size:13px;font-weight:600;color:var(--t);display:flex;align-items:center;justify-content:space-between}
+.np-clear{font-size:11px;color:var(--t3);cursor:pointer;background:none;border:none;font-family:var(--f)}
+.np-clear:hover{color:var(--tw-light)}
+.notif-item{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--bd);cursor:pointer}
+.notif-item:hover{background:var(--bg3)}
+.notif-item:last-child{border-bottom:none}
+.ni-av{width:32px;height:32px;border-radius:50%;overflow:hidden;flex-shrink:0}
+.ni-av img{width:100%;height:100%;object-fit:cover}
+.ni-text{font-size:12px;color:var(--t2);flex:1;line-height:1.4}
+.ni-text strong{color:var(--t)}
+.ni-time{font-size:10px;color:var(--t3);flex-shrink:0}
+.np-empty{padding:24px;text-align:center;font-size:13px;color:var(--t3)}
+.notif-toast{position:fixed;bottom:20px;right:20px;background:var(--bg2);border:1px solid var(--tw);border-radius:10px;padding:12px 16px;display:flex;align-items:center;gap:10px;z-index:999;box-shadow:0 4px 24px rgba(0,0,0,.4);animation:slideIn .3s ease;max-width:280px}
+@keyframes slideIn{from{transform:translateX(120%);opacity:0}to{transform:translateX(0);opacity:1}}
+.toast-av{width:36px;height:36px;border-radius:50%;overflow:hidden;flex-shrink:0}
+.toast-av img{width:100%;height:100%;object-fit:cover}
+.toast-text{font-size:12px;color:var(--t2);line-height:1.4}
+.toast-text strong{color:var(--t);display:block;font-size:13px}
+
+/* ── IMPORT ── */
+.import-list{max-height:220px;overflow-y:auto;margin-bottom:12px;border:1px solid var(--bd);border-radius:var(--r)}
+.imp-item{display:flex;align-items:center;gap:9px;padding:8px 11px;border-bottom:1px solid var(--bd);cursor:pointer;transition:background .12s}
+.imp-item:last-child{border-bottom:none}
+.imp-item:hover{background:var(--bg3)}
+.imp-item input[type=checkbox]{accent-color:var(--tw);flex-shrink:0}
+.imp-av{width:28px;height:28px;border-radius:50%;overflow:hidden;flex-shrink:0}
+.imp-av img{width:100%;height:100%;object-fit:cover}
+.imp-name{font-size:13px;color:var(--t);flex:1}
+.imp-live{width:7px;height:7px;border-radius:50%;background:var(--live);flex-shrink:0}
+.imp-btn{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
+.imp-btn button{font-size:11px;background:none;border:none;color:var(--tw-light);cursor:pointer;font-family:var(--f)}
+
+/* CAT COLOR PALETTE */
+.c0{background:#9147ff22;color:#bf94ff;border:1px solid #9147ff44}
+.c1{background:#1e9e6b22;color:#1e9e6b;border:1px solid #1e9e6b44}
+.c2{background:#e9191622;color:#e91916;border:1px solid #e9191644}
+.c3{background:#f5981222;color:#f59812;border:1px solid #f5981244}
+.c4{background:#4b85c822;color:#4b85c8;border:1px solid #4b85c844}
+.c5{background:#e06ac022;color:#e06ac0;border:1px solid #e06ac044}
+body.dark .c0{color:#bf94ff}
+body.light .c0{color:#6b2fb8}
+body.light .c1{color:#0f6e56}
+body.light .c2{color:#993c1d}
+body.light .c3{color:#854f0b}
+body.light .c4{color:#185fa5}
+body.light .c5{color:#993556}
+
+.spin{animation:spin .65s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-@media(max-width:700px){.player-chat-panel{display:none}}
+@media(max-width:680px){.pch{display:none}.search-input{width:130px}}
 </style>
 </head>
-<body>
+<body class="dark">
 
-<div class="app-header">
-  <div class="logo">
-    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/></svg>
-    Twitch Tracker
-  </div>
-  <button class="refresh-btn" onclick="refreshAll()">
-    <svg id="refreshIcon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
-    Actualiser
+<!-- LOGIN -->
+<div id="loginScreen" style="display:none" class="login-screen">
+  <svg class="big" viewBox="0 0 24 24"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/></svg>
+  <h1>Twitch Tracker</h1>
+  <p>Connecte-toi avec Twitch pour suivre tes streamers favoris, recevoir des notifications de live et regarder directement depuis l'app.</p>
+  <button class="login-btn" onclick="startLogin()">
+    <svg viewBox="0 0 24 24"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0z"/></svg>
+    Se connecter avec Twitch
   </button>
 </div>
 
-<div class="note">
-  <strong>Pour les aperçus de stream en direct</strong> — Les iframes Twitch nécessitent un vrai domaine. Héberge ce fichier sur <strong>GitHub Pages, Netlify ou Vercel</strong> (gratuit) pour regarder les streams directement. Les données streamers sont simulées (l'API Twitch nécessite un backend OAuth). Appuie sur <strong>Échap</strong> pour fermer le player.
-</div>
-
-<div class="stats-bar">
-  <div class="stat"><div class="stat-label">Streamers suivis</div><div class="stat-value" id="totalCount">0</div></div>
-  <div class="stat"><div class="stat-label">En live</div><div class="stat-value live-col pulse" id="liveCount">0</div></div>
-  <div class="stat"><div class="stat-label">Hors ligne</div><div class="stat-value" id="offlineCount">0</div></div>
-  <div class="stat"><div class="stat-label">Viewers total</div><div class="stat-value online-col" id="viewerCount">0</div></div>
-</div>
-
-<div class="section-header">
-  <h2>Mes streamers</h2>
-  <button class="add-btn" onclick="openModal()">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
-    Ajouter un streamer
-  </button>
-</div>
-
-<div class="grid" id="grid"></div>
-
-<!-- ADD MODAL -->
-<div class="modal-bg" id="addModal">
-  <div class="modal">
-    <h3>Ajouter un streamer</h3>
-    <input type="text" id="nameInput" placeholder="Nom Twitch (ex: pokimane, xQc...)" autocomplete="off" />
-    <div class="modal-btns">
-      <button class="btn-cancel" onclick="closeModal()">Annuler</button>
-      <button class="btn-add" onclick="addStreamer()">Ajouter</button>
+<!-- APP -->
+<div id="mainApp" style="display:none">
+  <div class="hdr">
+    <div class="logo">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/></svg>
+      Twitch Tracker
     </div>
-  </div>
-</div>
-
-<!-- PLAYER OVERLAY -->
-<div class="player-overlay" id="playerOverlay">
-  <div class="player-header">
-    <div class="player-info">
-      <div class="player-avatar" id="playerAvatar"></div>
-      <div style="min-width:0">
-        <div class="player-name" id="playerName"></div>
-        <div class="player-meta" id="playerMeta"></div>
+    <div class="hdr-right">
+      <button class="icon-btn" onclick="refreshAll()">
+        <svg id="refreshIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
+        Actualiser
+      </button>
+      <!-- Notif button -->
+      <div class="profile-wrap" id="notifWrap">
+        <button class="icon-btn notif-btn" onclick="toggleNotifPanel()" id="notifBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0"/></svg>
+          <span id="notifCount"></span>
+          <span class="notif-dot" id="notifDot"></span>
+        </button>
+        <div class="notif-panel" id="notifPanel">
+          <div class="np-hdr">Notifications <button class="np-clear" onclick="clearNotifs()">Tout effacer</button></div>
+          <div id="notifList"><div class="np-empty">Aucune notification</div></div>
+        </div>
       </div>
-      <span class="player-live-badge">LIVE</span>
-      <span class="player-viewers"><span class="dot-red"></span><span id="playerViewers"></span></span>
-    </div>
-    <div class="player-actions">
-      <a class="player-twitch-link" id="playerLink" href="#" target="_blank">Ouvrir sur Twitch ↗</a>
-      <button class="player-close" onclick="closePlayer()">✕ Fermer</button>
+      <!-- Profile -->
+      <div class="profile-wrap" id="profileWrap">
+        <button class="profile-btn" onclick="toggleDropdown()"><img id="profileImg" src="" alt=""></button>
+        <div class="dropdown" id="dropdown">
+          <div class="dd-hdr">
+            <div class="dd-av"><img id="ddAvatar" src="" alt=""></div>
+            <div><div class="dd-name" id="ddName"></div><div class="dd-login" id="ddLogin"></div></div>
+          </div>
+          <div class="dd-items">
+            <button class="dd-item" onclick="toggleTheme()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+              <span id="themeLabel">Mode clair</span>
+            </button>
+            <div class="dd-sep"></div>
+            <button class="dd-item red" onclick="openConfirmClear()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6M9 6V4h6v2"/></svg>
+              Supprimer mes données
+            </button>
+            <button class="dd-item red" onclick="logout()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+              Déconnexion
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="player-body">
-    <div class="player-stream" id="playerStream"></div>
-    <div class="player-chat-panel">
-      <div class="chat-label">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" style="opacity:.5"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+
+  <div class="stats">
+    <div class="stat"><div class="stat-l">Streamers suivis</div><div class="stat-v" id="totalCount">0</div></div>
+    <div class="stat"><div class="stat-l">En live</div><div class="stat-v rc pulse" id="liveCount">0</div></div>
+    <div class="stat"><div class="stat-l">Hors ligne</div><div class="stat-v" id="offlineCount">0</div></div>
+    <div class="stat"><div class="stat-l">Viewers total</div><div class="stat-v gc" id="viewerCount">0</div></div>
+  </div>
+
+  <div class="toolbar">
+    <div class="tabs" id="tabs"></div>
+    <div class="search-wrap">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      <input class="search-input" id="searchInput" placeholder="Rechercher..." oninput="render()">
+    </div>
+  </div>
+
+  <div class="sec-hdr">
+    <h2 id="secTitle">Tous les streamers</h2>
+    <div style="display:flex;gap:8px">
+      <button class="icon-btn" onclick="openImport()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+        Importer mes follows
+      </button>
+      <button class="add-btn" onclick="openAddModal()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+        Ajouter
+      </button>
+    </div>
+  </div>
+  <div class="grid" id="grid"></div>
+</div>
+
+<!-- ADD STREAMER MODAL -->
+<div class="mbg" id="addModal">
+  <div class="mbox">
+    <h3>Ajouter un streamer</h3>
+    <input class="minput" id="nameInput" placeholder="Nom Twitch (ex: pokimane, xQc...)" autocomplete="off">
+    <div style="margin-bottom:10px">
+      <div style="font-size:12px;color:var(--t3);margin-bottom:6px">Catégorie</div>
+      <div id="catPickerAdd" style="display:flex;gap:6px;flex-wrap:wrap"></div>
+    </div>
+    <div class="mbtns">
+      <button class="bcl" onclick="closeAddModal()">Annuler</button>
+      <button class="bpr" onclick="addStreamer()">Ajouter</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADD CATEGORY MODAL -->
+<div class="mbg" id="catModal">
+  <div class="mbox">
+    <h3>Nouvelle catégorie</h3>
+    <input class="minput" id="catInput" placeholder="Nom de la catégorie (ex: FPS, FR, Amis...)">
+    <div class="mbtns">
+      <button class="bcl" onclick="closeCatModal()">Annuler</button>
+      <button class="bpr" onclick="addCategory()">Créer</button>
+    </div>
+  </div>
+</div>
+
+<!-- CONFIRM CLEAR -->
+<div class="mbg" id="confirmModal">
+  <div class="mbox">
+    <h3>Supprimer toutes les données ?</h3>
+    <p>Ta liste de streamers, catégories et préférences seront effacées. Action irréversible.</p>
+    <div class="mbtns">
+      <button class="bcl" onclick="closeConfirmClear()">Annuler</button>
+      <button class="bdng" onclick="clearAllData()">Supprimer</button>
+    </div>
+  </div>
+</div>
+
+<!-- IMPORT FOLLOWS MODAL -->
+<div class="mbg" id="importModal">
+  <div class="mbox" style="width:380px">
+    <h3>Importer mes follows Twitch</h3>
+    <div id="importContent"><div style="text-align:center;padding:20px;color:var(--t3)">Chargement de tes follows...</div></div>
+    <div class="mbtns" id="importBtns" style="display:none">
+      <button class="bcl" onclick="closeImport()">Annuler</button>
+      <button class="bpr" onclick="confirmImport()">Importer la sélection</button>
+    </div>
+    <div class="mbtns" id="importClose" style="display:none">
+      <button class="bpr" onclick="closeImport()">Fermer</button>
+    </div>
+  </div>
+</div>
+
+<!-- PLAYER -->
+<div class="player-ov" id="playerOv">
+  <div class="ph">
+    <div class="pi">
+      <div class="p-av"><img id="pAvImg" src="" alt=""></div>
+      <div style="min-width:0"><div class="pname" id="pName"></div><div class="pmeta" id="pMeta"></div></div>
+      <span class="plive">LIVE</span>
+      <span class="pvw"><span class="dot-r"></span><span id="pVw"></span></span>
+    </div>
+    <div class="pa">
+      <a class="ptl" id="pLink" href="#" target="_blank">Ouvrir sur Twitch ↗</a>
+      <button class="pcl" onclick="closePlayer()">✕ Fermer</button>
+    </div>
+  </div>
+  <div class="pb">
+    <div class="ps" id="pStream"></div>
+    <div class="pch">
+      <div class="pch-hdr">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="opacity:.5"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
         Chat en direct
       </div>
       <iframe id="chatFrame" src="" allowfullscreen></iframe>
-      <div class="domain-warning" id="domainWarning" style="display:none">
-        <strong>Chat non disponible en local</strong>
-        Héberge la page sur un domaine pour accéder au chat Twitch.
-      </div>
     </div>
   </div>
 </div>
 
 <script>
-const COLORS=['#9147ff','#bf94ff','#1e9e6b','#e91916','#f59812','#4b85c8','#e06ac0','#6ab04c','#e8a838','#2bbbad'];
-function colorFor(n){let h=0;for(let c of n)h=(h*31+c.charCodeAt(0))&0xffff;return COLORS[h%COLORS.length];}
-function initials(n){return n.slice(0,2).toUpperCase();}
-function fmt(n){if(n>=1000)return(n/1000).toFixed(1).replace('.0','')+'K';return String(n);}
+const CLIENT_ID = 'jtbtny7cquvoctus5ttpme26d00keh';
+const REDIRECT = location.href.split('#')[0].split('?')[0];
+const CAT_COLORS = ['c0','c1','c2','c3','c4','c5'];
 
-const FAKE_BASE={
-  pokimane:{live:true,viewers:28450,game:'Just Chatting',title:'chill stream + viewer games !!'},
-  xqc:{live:true,viewers:74200,game:'Minecraft',title:'LE PLUS GRAND SPEED RUN DE TOUS LES TEMPS'},
-  shroud:{live:false,viewers:0,game:'Valorant',title:'ranked grind'},
-  ninja:{live:false,viewers:0,game:'Fortnite',title:''},
-  loltyler1:{live:true,viewers:39800,game:'League of Legends',title:'CHALLENGER OR BUST'},
-  hasanabi:{live:true,viewers:22100,game:'Just Chatting',title:'regarder des clips + réagir'},
-  timthetatman:{live:false,viewers:0,game:'Call of Duty',title:''},
-  summit1g:{live:true,viewers:11300,game:'CS2',title:'ranked grind'},
-};
-const GAMES=['Fortnite','Minecraft','League of Legends','Valorant','Just Chatting','GTA V','Apex Legends','CS2','Elden Ring'];
-const TITLES=['En train de jouer !','Chill stream','Road to Diamond','Grind quotidien','Viewer games !'];
-function fakeData(name){
-  const key=name.toLowerCase().replace(/\s/g,'');
-  if(FAKE_BASE[key])return{...FAKE_BASE[key]};
-  const live=Math.random()>.5;
-  return{live,viewers:live?Math.floor(Math.random()*25000+300):0,
-    game:live?GAMES[Math.floor(Math.random()*GAMES.length)]:'',
-    title:live?TITLES[Math.floor(Math.random()*TITLES.length)]:''};
+// ── STATE ─────────────────────────────────────────────────────────────────────
+let token = null, user = null;
+let streamers = JSON.parse(localStorage.getItem('tw_streamers') || '[]');
+let categories = JSON.parse(localStorage.getItem('tw_categories') || '["Tous"]');
+let streamerCats = JSON.parse(localStorage.getItem('tw_streamerCats') || '{}');
+let streamData = {};
+let notifications = JSON.parse(localStorage.getItem('tw_notifs') || '[]');
+let previousLive = new Set(JSON.parse(localStorage.getItem('tw_prevLive') || '[]'));
+let activeTab = 'Tous';
+let selectedCatAdd = null;
+let importSelected = new Set();
+let currentPlayer = null;
+let refreshTimer = null;
+let isDark = localStorage.getItem('tw_theme') !== 'light';
+
+function save() {
+  localStorage.setItem('tw_streamers', JSON.stringify(streamers));
+  localStorage.setItem('tw_categories', JSON.stringify(categories));
+  localStorage.setItem('tw_streamerCats', JSON.stringify(streamerCats));
+}
+function saveNotifs() { localStorage.setItem('tw_notifs', JSON.stringify(notifications.slice(0,50))); }
+
+// ── AUTH ──────────────────────────────────────────────────────────────────────
+function startLogin() {
+  location.href = `https://id.twitch.tv/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT)}&response_type=token&scope=${encodeURIComponent('user:read:email user:read:follows')}`;
+}
+function logout() {
+  token = null; user = null;
+  localStorage.removeItem('tw_token'); localStorage.removeItem('tw_user');
+  closeDropdown();
+  document.getElementById('loginScreen').style.display = 'flex';
+  document.getElementById('mainApp').style.display = 'none';
+}
+function clearAllData() {
+  streamers = []; categories = ['Tous']; streamerCats = {}; notifications = []; previousLive = new Set();
+  localStorage.removeItem('tw_streamers'); localStorage.removeItem('tw_categories');
+  localStorage.removeItem('tw_streamerCats'); localStorage.removeItem('tw_notifs'); localStorage.removeItem('tw_prevLive');
+  closeConfirmClear(); closeDropdown();
+  activeTab = 'Tous';
+  renderTabs(); render();
 }
 
-let streamers=JSON.parse(localStorage.getItem('tw_trackerv3')||'null')||['pokimane','xQc','shroud','Ninja','summit1g'];
-let data={};
-function save(){localStorage.setItem('tw_trackerv3',JSON.stringify(streamers));}
-
-function render(){
-  const grid=document.getElementById('grid');
-  let liveN=0,totalV=0;
-  grid.innerHTML='';
-  if(!streamers.length){
-    grid.innerHTML='<div class="empty"><svg width="48" height="48" viewBox="0 0 24 24"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0z"/></svg>Aucun streamer suivi.<br>Clique sur <strong>Ajouter un streamer</strong> pour commencer.</div>';
+async function initAuth() {
+  applyTheme();
+  const hash = location.hash;
+  if (hash && hash.includes('access_token')) {
+    token = new URLSearchParams(hash.slice(1)).get('access_token');
+    localStorage.setItem('tw_token', token);
+    history.replaceState(null, '', location.pathname);
+  } else {
+    token = localStorage.getItem('tw_token');
   }
-  for(const name of streamers){
-    const d=data[name]||fakeData(name);
-    data[name]=d;
-    if(d.live){liveN++;totalV+=d.viewers;}
-    const col=colorFor(name);
-    const card=document.createElement('div');
-    card.className='card';
-    let thumbContent='';
-    if(d.live){
-      thumbContent=`
-        <div class="thumb-live-bg" style="background:linear-gradient(135deg,${col}28,${col}08);width:100%;height:100%">
-          <svg width="44" height="44" viewBox="0 0 24 24" fill="${col}" opacity=".22"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0z"/></svg>
-        </div>
-        <span class="live-badge">LIVE</span>
-        <span class="viewers-badge"><span class="dot-red"></span>${fmt(d.viewers)}</span>
-        <div class="play-overlay"><div class="play-circle"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>`;
-    } else {
-      thumbContent=`<div class="thumb-placeholder"><svg viewBox="0 0 24 24"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0z"/></svg></div>`;
+  if (!token) { document.getElementById('loginScreen').style.display = 'flex'; return; }
+  try {
+    const cached = localStorage.getItem('tw_user');
+    user = cached ? JSON.parse(cached) : null;
+    if (!user) {
+      const r = await twitchGet('https://api.twitch.tv/helix/users');
+      user = r.data[0];
+      localStorage.setItem('tw_user', JSON.stringify(user));
     }
-    card.innerHTML=`
-      <div class="thumb${d.live?' clickable':''}" ${d.live?`onclick="openPlayer('${name}')"`:''}>
-        ${thumbContent}
-      </div>
-      <div class="card-body">
-        <div class="card-top">
-          <div class="avatar" style="background:${col}22;border:1.5px solid ${col}55;color:${col}">${initials(name)}</div>
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('mainApp').style.display = 'block';
+    document.getElementById('profileImg').src = user.profile_image_url;
+    document.getElementById('ddAvatar').src = user.profile_image_url;
+    document.getElementById('ddName').textContent = user.display_name;
+    document.getElementById('ddLogin').textContent = '@' + user.login;
+    renderTabs();
+    await refreshData();
+    refreshTimer = setInterval(refreshData, 60000);
+  } catch(e) {
+    localStorage.removeItem('tw_token'); localStorage.removeItem('tw_user');
+    document.getElementById('loginScreen').style.display = 'flex';
+  }
+}
+
+// ── API ───────────────────────────────────────────────────────────────────────
+async function twitchGet(url) {
+  const r = await fetch(url, { headers: { 'Client-ID': CLIENT_ID, 'Authorization': 'Bearer ' + token } });
+  if (!r.ok) throw new Error(r.status);
+  return r.json();
+}
+
+async function fetchData() {
+  if (!streamers.length) return {};
+  const result = {};
+  const chunks = [];
+  for (let i = 0; i < streamers.length; i += 100) chunks.push(streamers.slice(i, i+100));
+  for (const chunk of chunks) {
+    const q = chunk.map(n => 'user_login=' + encodeURIComponent(n.toLowerCase())).join('&');
+    const [sr, ur] = await Promise.all([
+      twitchGet(`https://api.twitch.tv/helix/streams?${q}&first=100`),
+      twitchGet(`https://api.twitch.tv/helix/users?${q}`)
+    ]);
+    const sm = {}, um = {};
+    sr.data.forEach(s => sm[s.user_login.toLowerCase()] = s);
+    ur.data.forEach(u => um[u.login.toLowerCase()] = u);
+    for (const name of chunk) {
+      const key = name.toLowerCase(), s = sm[key], u = um[key];
+      result[name] = s
+        ? { live:true, viewers:s.viewer_count, game:s.game_name, title:s.title,
+            thumb: s.thumbnail_url.replace('{width}','440').replace('{height}','248'),
+            avatar: u?.profile_image_url||'', displayName: u?.display_name||name }
+        : { live:false, viewers:0, game:'', title:'', thumb:'',
+            avatar: u?.profile_image_url||'', displayName: u?.display_name||name };
+    }
+  }
+  return result;
+}
+
+async function refreshData() {
+  document.getElementById('refreshIcon').classList.add('spin');
+  try {
+    const newData = await fetchData();
+    checkNotifications(newData);
+    streamData = newData;
+  } catch(e) { console.error(e); }
+  document.getElementById('refreshIcon').classList.remove('spin');
+  render();
+}
+
+// ── NOTIFICATIONS ─────────────────────────────────────────────────────────────
+function checkNotifications(newData) {
+  for (const [name, d] of Object.entries(newData)) {
+    if (d.live && !previousLive.has(name.toLowerCase())) {
+      const notif = { id: Date.now() + Math.random(), name, displayName: d.displayName, avatar: d.avatar, game: d.game, time: new Date().toLocaleTimeString('fr-FR', {hour:'2-digit',minute:'2-digit'}) };
+      notifications.unshift(notif);
+      showToast(notif);
+    }
+  }
+  previousLive = new Set(Object.entries(newData).filter(([,d]) => d.live).map(([n]) => n.toLowerCase()));
+  localStorage.setItem('tw_prevLive', JSON.stringify([...previousLive]));
+  saveNotifs();
+  renderNotifBadge();
+  renderNotifList();
+}
+
+function showToast(n) {
+  const el = document.createElement('div');
+  el.className = 'notif-toast';
+  el.innerHTML = `<div class="toast-av"><img src="${n.avatar}" alt="" onerror="this.style.display='none'"></div><div class="toast-text"><strong>${n.displayName}</strong>est passé en live — ${n.game||''}</div>`;
+  el.onclick = () => { openPlayer(n.name); el.remove(); };
+  document.body.appendChild(el);
+  setTimeout(() => el.style.animation = 'slideIn .3s ease reverse', 3700);
+  setTimeout(() => el.remove(), 4000);
+}
+
+function renderNotifBadge() {
+  const dot = document.getElementById('notifDot');
+  const cnt = document.getElementById('notifCount');
+  if (notifications.length > 0) {
+    dot.classList.add('show');
+    cnt.textContent = notifications.length > 9 ? '9+' : (notifications.length > 0 ? notifications.length : '');
+  } else {
+    dot.classList.remove('show');
+    cnt.textContent = '';
+  }
+}
+
+function renderNotifList() {
+  const list = document.getElementById('notifList');
+  if (!notifications.length) { list.innerHTML = '<div class="np-empty">Aucune notification</div>'; return; }
+  list.innerHTML = notifications.map(n => `
+    <div class="notif-item" onclick="openPlayer('${n.name}');closeNotifPanel()">
+      <div class="ni-av"><img src="${n.avatar}" alt="" onerror="this.style.display='none'"></div>
+      <div class="ni-text"><strong>${n.displayName}</strong> est passé en live${n.game ? ' — ' + n.game : ''}</div>
+      <div class="ni-time">${n.time}</div>
+    </div>`).join('');
+}
+
+function clearNotifs() { notifications = []; saveNotifs(); renderNotifBadge(); renderNotifList(); }
+function toggleNotifPanel() {
+  document.getElementById('dropdown').classList.remove('open');
+  document.getElementById('notifPanel').classList.toggle('open');
+}
+function closeNotifPanel() { document.getElementById('notifPanel').classList.remove('open'); }
+
+// ── RENDER ────────────────────────────────────────────────────────────────────
+function fmt(n) { return n >= 1000 ? (n/1000).toFixed(1).replace('.0','') + 'K' : String(n); }
+
+function renderTabs() {
+  const tabs = document.getElementById('tabs');
+  tabs.innerHTML = categories.map((c, i) => {
+    const cls = i === 0 ? 'c0' : CAT_COLORS[i % CAT_COLORS.length];
+    return `<button class="tab${c === activeTab ? ' active' : ''}" onclick="setTab('${c}')">${c}</button>`;
+  }).join('') + `<button class="tab-add" onclick="openCatModal()">+ Catégorie</button>`;
+}
+
+function setTab(cat) { activeTab = cat; document.getElementById('searchInput').value = ''; renderTabs(); render(); }
+
+function render() {
+  const grid = document.getElementById('grid');
+  const q = document.getElementById('searchInput')?.value.trim().toLowerCase() || '';
+  let liveN = 0, totalV = 0;
+  grid.innerHTML = '';
+
+  let filtered = streamers.filter(name => {
+    if (q && !name.toLowerCase().includes(q) && !(streamData[name]?.displayName||'').toLowerCase().includes(q)) return false;
+    if (activeTab !== 'Tous' && (streamerCats[name] || 'Tous') !== activeTab) return false;
+    return true;
+  });
+
+  filtered.sort((a, b) => {
+    const da = streamData[a], db = streamData[b];
+    if (!da || !db) return 0;
+    if (da.live && !db.live) return -1;
+    if (!da.live && db.live) return 1;
+    return db.viewers - da.viewers;
+  });
+
+  // Count all for stats
+  for (const name of streamers) {
+    const d = streamData[name];
+    if (d?.live) { liveN++; totalV += d.viewers; }
+  }
+  document.getElementById('totalCount').textContent = streamers.length;
+  document.getElementById('liveCount').textContent = liveN;
+  document.getElementById('offlineCount').textContent = streamers.length - liveN;
+  document.getElementById('viewerCount').textContent = fmt(totalV);
+  document.getElementById('secTitle').textContent = activeTab === 'Tous' ? 'Tous les streamers' : activeTab;
+
+  if (!filtered.length) {
+    grid.innerHTML = '<div class="empty"><svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor" opacity=".2"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0z"/></svg>' + (streamers.length ? 'Aucun streamer dans cette catégorie.' : 'Aucun streamer suivi.<br>Clique sur <strong>Ajouter</strong> pour commencer.') + '</div>';
+    return;
+  }
+
+  for (const name of filtered) {
+    const d = streamData[name] || { live:false, viewers:0, game:'', title:'', thumb:'', avatar:'', displayName:name };
+    const cat = streamerCats[name];
+    const catIdx = cat ? categories.indexOf(cat) : -1;
+    const catCls = catIdx > 0 ? CAT_COLORS[catIdx % CAT_COLORS.length] : '';
+
+    const card = document.createElement('div');
+    card.className = 'card';
+
+    let thumbContent = d.live
+      ? `${d.thumb ? `<img class="stream-thumb" src="${d.thumb}" alt="">` : `<div style="width:100%;height:100%;background:#9147ff12;display:flex;align-items:center;justify-content:center"><svg width="38" height="38" viewBox="0 0 24 24" fill="#9147ff" opacity=".25"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0z"/></svg></div>`}<span class="live-badge">LIVE</span><span class="vw-badge"><span class="dot-r"></span>${fmt(d.viewers)}</span><div class="play-ov"><div class="play-c"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="#fff"/></svg></div></div>`
+      : `<div class="thumb-ph"><svg viewBox="0 0 24 24"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0z"/></svg></div>`;
+
+    const avHtml = d.avatar
+      ? `<img src="${d.avatar}" alt="" onerror="this.style.display='none';this.nextSibling&&(this.nextSibling.style.display='flex')">`
+      : `<span>${(d.displayName||name).slice(0,2).toUpperCase()}</span>`;
+
+    card.innerHTML = `
+      <div class="thumb${d.live?' click':''}" ${d.live?`onclick="openPlayer('${name}')"`:''}>${thumbContent}</div>
+      <div class="cb">
+        <div class="ct">
+          <div class="av">${avHtml}</div>
           <div style="flex:1;min-width:0">
-            <div class="card-name">${name}</div>
-            <div class="card-status${d.live?'':' offline'}">${d.live?'● En live':'○ Hors ligne'}</div>
+            <div class="cname">${d.displayName||name}</div>
+            <div class="cst${d.live?'':' off'}">${d.live?'● En live':'○ Hors ligne'}</div>
           </div>
-          <button class="remove-btn" onclick="removeStreamer('${name}')">✕</button>
+          <button class="rm-btn" onclick="removeStreamer('${name}')">✕</button>
         </div>
-        ${d.live
-          ?`<div class="card-game">${d.game}</div><div class="card-title-text">${d.title}</div>`
-          :`<div class="card-game" style="color:var(--text3)">Pas de stream en cours</div><div class="card-title-text" style="color:var(--text3)">${d.game||'—'}</div>`}
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:6px">
+          <div style="min-width:0;flex:1">
+            ${d.live ? `<div class="cgame">${d.game||''}</div><div class="ctitle">${d.title||''}</div>` : `<div class="cgame" style="color:var(--t3)">Pas de stream en cours</div>`}
+          </div>
+          ${cat && cat !== 'Tous' ? `<span class="cat-tag ${catCls}" onclick="setTab('${cat}')">${cat}</span>` : ''}
+        </div>
       </div>
-      <div class="card-footer">
-        ${d.live
-          ?`<button class="watch-btn" onclick="openPlayer('${name}')">▶ Regarder</button>`
-          :`<span style="font-size:11px;color:var(--text3)">—</span>`}
-        <span style="font-size:11px;color:var(--text3)">${d.live?fmt(d.viewers)+' viewers':''}</span>
+      <div class="cf">
+        ${d.live ? `<button class="watch-btn" onclick="openPlayer('${name}')">▶ Regarder</button>` : `<span style="font-size:11px;color:var(--t3)">—</span>`}
+        <span style="font-size:11px;color:var(--t3)">${d.live ? fmt(d.viewers)+' viewers' : ''}</span>
       </div>`;
     grid.appendChild(card);
   }
-  document.getElementById('totalCount').textContent=streamers.length;
-  document.getElementById('liveCount').textContent=liveN;
-  document.getElementById('offlineCount').textContent=streamers.length-liveN;
-  document.getElementById('viewerCount').textContent=fmt(totalV);
 }
 
-let currentPlayer=null;
-function openPlayer(name){
-  const d=data[name];
-  const col=colorFor(name);
-  const isLocal=location.hostname===''||location.hostname==='localhost'||location.hostname==='127.0.0.1';
-  const parent=isLocal?'localhost':location.hostname;
-
-  document.getElementById('playerAvatar').style.cssText=`background:${col}22;border:1.5px solid ${col}55;color:${col};`;
-  document.getElementById('playerAvatar').textContent=initials(name);
-  document.getElementById('playerName').textContent=name;
-  document.getElementById('playerMeta').textContent=d.game+(d.title?' — '+d.title:'');
-  document.getElementById('playerViewers').textContent=fmt(d.viewers)+' viewers';
-  document.getElementById('playerLink').href='https://twitch.tv/'+name.toLowerCase();
-
-  const streamUrl=`https://player.twitch.tv/?channel=${name.toLowerCase()}&parent=${parent}&autoplay=true`;
-  document.getElementById('playerStream').innerHTML=`<iframe src="${streamUrl}" allowfullscreen></iframe>`;
-
-  const chatFrame=document.getElementById('chatFrame');
-  const domainWarn=document.getElementById('domainWarning');
-  if(isLocal){
-    chatFrame.style.display='none';
-    domainWarn.style.display='block';
-  } else {
-    chatFrame.style.display='block';
-    domainWarn.style.display='none';
-    chatFrame.src=`https://www.twitch.tv/embed/${name.toLowerCase()}/chat?parent=${parent}&darkpopout`;
-  }
-
-  document.getElementById('playerOverlay').classList.add('open');
-  document.body.style.overflow='hidden';
-  currentPlayer=name;
-}
-function closePlayer(){
-  document.getElementById('playerOverlay').classList.remove('open');
-  document.getElementById('playerStream').innerHTML='';
-  document.getElementById('chatFrame').src='';
-  document.body.style.overflow='';
-  currentPlayer=null;
-}
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&currentPlayer)closePlayer();});
-
-function openModal(){
+// ── ADD STREAMER ──────────────────────────────────────────────────────────────
+function openAddModal() {
+  selectedCatAdd = null;
+  renderCatPicker();
   document.getElementById('addModal').classList.add('open');
-  setTimeout(()=>document.getElementById('nameInput').focus(),50);
+  setTimeout(() => document.getElementById('nameInput').focus(), 50);
 }
-function closeModal(){
-  document.getElementById('addModal').classList.remove('open');
-  document.getElementById('nameInput').value='';
-}
-document.getElementById('nameInput').addEventListener('keydown',e=>{
-  if(e.key==='Enter')addStreamer();
-  if(e.key==='Escape')closeModal();
-});
-document.getElementById('addModal').addEventListener('click',e=>{if(e.target===document.getElementById('addModal'))closeModal();});
+function closeAddModal() { document.getElementById('addModal').classList.remove('open'); document.getElementById('nameInput').value = ''; }
+document.getElementById('nameInput').addEventListener('keydown', e => { if (e.key==='Enter') addStreamer(); if (e.key==='Escape') closeAddModal(); });
+document.getElementById('addModal').addEventListener('click', e => { if (e.target===document.getElementById('addModal')) closeAddModal(); });
 
-function addStreamer(){
-  const v=document.getElementById('nameInput').value.trim();
-  if(!v)return;
-  if(streamers.map(s=>s.toLowerCase()).includes(v.toLowerCase())){closeModal();return;}
+function renderCatPicker() {
+  const el = document.getElementById('catPickerAdd');
+  el.innerHTML = categories.slice(1).map((c, i) => {
+    const idx = i+1, cls = CAT_COLORS[idx % CAT_COLORS.length];
+    return `<span class="cat-tag ${cls}" style="cursor:pointer;${selectedCatAdd===c?'outline:2px solid #9147ff;outline-offset:1px':''}" onclick="selectCatAdd('${c}')">${c}</span>`;
+  }).join('') || '<span style="font-size:12px;color:var(--t3)">Aucune catégorie créée</span>';
+}
+function selectCatAdd(c) { selectedCatAdd = selectedCatAdd === c ? null : c; renderCatPicker(); }
+
+async function addStreamer() {
+  const v = document.getElementById('nameInput').value.trim();
+  if (!v) return;
+  if (streamers.map(s => s.toLowerCase()).includes(v.toLowerCase())) { closeAddModal(); return; }
   streamers.push(v);
+  if (selectedCatAdd) streamerCats[v] = selectedCatAdd;
   save();
-  data[v]=fakeData(v);
-  closeModal();
-  render();
+  closeAddModal();
+  await refreshData();
 }
-function removeStreamer(name){
-  if(currentPlayer===name)closePlayer();
-  streamers=streamers.filter(s=>s!==name);
-  delete data[name];
+
+function removeStreamer(name) {
+  if (currentPlayer === name) closePlayer();
+  streamers = streamers.filter(s => s !== name);
+  delete streamerCats[name]; delete streamData[name];
+  save(); render();
+}
+
+async function refreshAll() { await refreshData(); }
+
+// ── CATEGORIES ────────────────────────────────────────────────────────────────
+function openCatModal() { document.getElementById('catModal').classList.add('open'); setTimeout(() => document.getElementById('catInput').focus(), 50); }
+function closeCatModal() { document.getElementById('catModal').classList.remove('open'); document.getElementById('catInput').value = ''; }
+document.getElementById('catInput').addEventListener('keydown', e => { if (e.key==='Enter') addCategory(); if (e.key==='Escape') closeCatModal(); });
+document.getElementById('catModal').addEventListener('click', e => { if (e.target===document.getElementById('catModal')) closeCatModal(); });
+function addCategory() {
+  const v = document.getElementById('catInput').value.trim();
+  if (!v || categories.includes(v)) { closeCatModal(); return; }
+  categories.push(v);
+  save(); closeCatModal(); renderTabs();
+}
+
+// ── IMPORT FOLLOWS ────────────────────────────────────────────────────────────
+async function openImport() {
+  document.getElementById('importModal').classList.add('open');
+  document.getElementById('importContent').innerHTML = '<div style="text-align:center;padding:24px;color:var(--t3)">Chargement de tes follows...</div>';
+  document.getElementById('importBtns').style.display = 'none';
+  document.getElementById('importClose').style.display = 'none';
+  importSelected = new Set();
+  try {
+    // Get follows
+    let follows = [], cursor = null;
+    do {
+      const url = `https://api.twitch.tv/helix/channels/followed?user_id=${user.id}&first=100${cursor?'&after='+cursor:''}`;
+      const r = await twitchGet(url);
+      follows = follows.concat(r.data);
+      cursor = r.pagination?.cursor;
+    } while (cursor && follows.length < 500);
+
+    // Filter out already added
+    const existing = new Set(streamers.map(s => s.toLowerCase()));
+    const newFollows = follows.filter(f => !existing.has(f.broadcaster_login.toLowerCase()));
+
+    if (!newFollows.length) {
+      document.getElementById('importContent').innerHTML = '<div style="padding:20px;text-align:center;font-size:13px;color:var(--t3)">Tu suis déjà tous tes follows Twitch !</div>';
+      document.getElementById('importClose').style.display = 'flex';
+      return;
+    }
+
+    // Fetch live status
+    const q = newFollows.map(f => 'user_login=' + f.broadcaster_login).join('&');
+    let liveSet = new Set();
+    try {
+      const sr = await twitchGet(`https://api.twitch.tv/helix/streams?${q}&first=100`);
+      sr.data.forEach(s => liveSet.add(s.user_login.toLowerCase()));
+    } catch(e){}
+
+    // Fetch avatars
+    let avatarMap = {};
+    try {
+      const ur = await twitchGet(`https://api.twitch.tv/helix/users?${q}`);
+      ur.data.forEach(u => avatarMap[u.login.toLowerCase()] = u.profile_image_url);
+    } catch(e){}
+
+    importSelected = new Set(newFollows.map(f => f.broadcaster_login));
+
+    document.getElementById('importContent').innerHTML = `
+      <div class="imp-btn">
+        <span style="font-size:12px;color:var(--t3)">${newFollows.length} follows non ajoutés</span>
+        <div style="display:flex;gap:8px">
+          <button onclick="selAll(true)">Tout sélectionner</button>
+          <button onclick="selAll(false)">Tout désélectionner</button>
+        </div>
+      </div>
+      <div class="import-list" id="importList">
+        ${newFollows.map(f => `
+          <div class="imp-item" onclick="toggleImp('${f.broadcaster_login}')">
+            <input type="checkbox" id="ichk_${f.broadcaster_login}" ${importSelected.has(f.broadcaster_login)?'checked':''}>
+            <div class="imp-av"><img src="${avatarMap[f.broadcaster_login.toLowerCase()]||''}" alt="" onerror="this.style.display='none'"></div>
+            <span class="imp-name">${f.broadcaster_name}</span>
+            ${liveSet.has(f.broadcaster_login.toLowerCase()) ? '<span class="imp-live"></span>' : ''}
+          </div>`).join('')}
+      </div>`;
+    document.getElementById('importBtns').style.display = 'flex';
+  } catch(e) {
+    document.getElementById('importContent').innerHTML = '<div style="padding:20px;text-align:center;font-size:13px;color:var(--t3)">Erreur lors du chargement des follows.<br>Vérifie ta connexion.</div>';
+    document.getElementById('importClose').style.display = 'flex';
+  }
+}
+
+function toggleImp(login) {
+  if (importSelected.has(login)) importSelected.delete(login);
+  else importSelected.add(login);
+  const chk = document.getElementById('ichk_' + login);
+  if (chk) chk.checked = importSelected.has(login);
+}
+function selAll(v) {
+  document.querySelectorAll('[id^="ichk_"]').forEach(chk => {
+    const login = chk.id.replace('ichk_', '');
+    v ? importSelected.add(login) : importSelected.delete(login);
+    chk.checked = v;
+  });
+}
+async function confirmImport() {
+  for (const login of importSelected) {
+    if (!streamers.map(s => s.toLowerCase()).includes(login.toLowerCase())) streamers.push(login);
+  }
   save();
-  render();
+  closeImport();
+  await refreshData();
 }
-function refreshAll(){
-  const icon=document.getElementById('refreshIcon');
-  icon.classList.add('spin');
-  data={};
-  setTimeout(()=>{icon.classList.remove('spin');render();},900);
+function closeImport() { document.getElementById('importModal').classList.remove('open'); }
+document.getElementById('importModal').addEventListener('click', e => { if (e.target===document.getElementById('importModal')) closeImport(); });
+
+// ── PLAYER ────────────────────────────────────────────────────────────────────
+function openPlayer(name) {
+  const d = streamData[name] || {};
+  const parent = location.hostname || 'localhost';
+  document.getElementById('pAvImg').src = d.avatar || '';
+  document.getElementById('pName').textContent = d.displayName || name;
+  document.getElementById('pMeta').textContent = (d.game||'') + (d.title ? ' — ' + d.title : '');
+  document.getElementById('pVw').textContent = fmt(d.viewers||0) + ' viewers';
+  document.getElementById('pLink').href = 'https://twitch.tv/' + name.toLowerCase();
+  document.getElementById('pStream').innerHTML = `<iframe src="https://player.twitch.tv/?channel=${name.toLowerCase()}&parent=${parent}&autoplay=true" allowfullscreen></iframe>`;
+  document.getElementById('chatFrame').src = `https://www.twitch.tv/embed/${name.toLowerCase()}/chat?parent=${parent}&darkpopout`;
+  document.getElementById('playerOv').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  currentPlayer = name;
+  closeNotifPanel();
 }
-render();
+function closePlayer() {
+  document.getElementById('playerOv').classList.remove('open');
+  document.getElementById('pStream').innerHTML = '';
+  document.getElementById('chatFrame').src = '';
+  document.body.style.overflow = '';
+  currentPlayer = null;
+}
+document.addEventListener('keydown', e => { if (e.key==='Escape' && currentPlayer) closePlayer(); });
+
+// ── THEME ─────────────────────────────────────────────────────────────────────
+function applyTheme() {
+  document.body.className = isDark ? 'dark' : 'light';
+  const lbl = document.getElementById('themeLabel');
+  if (lbl) lbl.textContent = isDark ? 'Mode clair' : 'Mode sombre';
+}
+function toggleTheme() { isDark = !isDark; localStorage.setItem('tw_theme', isDark?'dark':'light'); applyTheme(); }
+
+// ── DROPDOWNS ─────────────────────────────────────────────────────────────────
+function toggleDropdown() { closeNotifPanel(); document.getElementById('dropdown').classList.toggle('open'); }
+function closeDropdown() { document.getElementById('dropdown').classList.remove('open'); }
+document.addEventListener('click', e => {
+  if (!document.getElementById('profileWrap').contains(e.target)) closeDropdown();
+  if (!document.getElementById('notifWrap').contains(e.target)) closeNotifPanel();
+});
+
+// ── CONFIRM ───────────────────────────────────────────────────────────────────
+function openConfirmClear() { closeDropdown(); document.getElementById('confirmModal').classList.add('open'); }
+function closeConfirmClear() { document.getElementById('confirmModal').classList.remove('open'); }
+document.getElementById('confirmModal').addEventListener('click', e => { if (e.target===document.getElementById('confirmModal')) closeConfirmClear(); });
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+initAuth();
 </script>
 </body>
 </html>
