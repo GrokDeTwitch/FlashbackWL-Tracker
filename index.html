@@ -12,6 +12,7 @@ body.dark{--bg:#0e0e10;--bg2:#18181b;--bg3:#1f1f23;--bg4:#26262c;--bd:#2a2a30;--
 body.light{--bg:#f0eff5;--bg2:#ffffff;--bg3:#f5f4f8;--bg4:#e8e6f0;--bd:#dddbe8;--bd2:#c8c5d8;--t:#1a1a1f;--t2:#555566;--t3:#9999aa}
 body{font-family:var(--f);background:var(--bg);color:var(--t);min-height:100vh;padding:22px 20px;transition:background .2s,color .2s}
 
+/* HEADER */
 .hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid var(--bd);gap:10px;flex-wrap:wrap}
 .logo{display:flex;align-items:center;gap:9px;font-size:18px;font-weight:700;color:var(--tw-light)}
 body.light .logo{color:var(--tw-dark)}
@@ -21,10 +22,11 @@ body.light .logo{color:var(--tw-dark)}
 .ib:hover{border-color:var(--tw);color:var(--t)}
 .ib svg{width:13px;height:13px;flex-shrink:0}
 
+/* NOTIF */
 .nw{position:relative}
 .ndot{position:absolute;top:3px;right:3px;width:7px;height:7px;border-radius:50%;background:var(--live);display:none;border:2px solid var(--bg)}
 .ndot.on{display:block}
-.npanel{position:absolute;top:calc(100% + 8px);right:0;background:var(--bg2);border:1px solid var(--bd2);border-radius:12px;width:290px;max-height:380px;overflow-y:auto;z-index:400;box-shadow:0 8px 28px rgba(0,0,0,.4);display:none}
+.npanel{position:absolute;top:calc(100% + 8px);right:0;background:var(--bg2);border:1px solid var(--bd2);border-radius:12px;width:290px;max-height:380px;overflow-y:auto;z-index:500;box-shadow:0 8px 28px rgba(0,0,0,.4);display:none}
 .npanel.open{display:block}
 .np-hdr{padding:11px 13px;border-bottom:1px solid var(--bd);font-size:13px;font-weight:600;color:var(--t);display:flex;justify-content:space-between;align-items:center}
 .np-cl{font-size:11px;color:var(--t3);cursor:pointer;background:none;border:none;font-family:var(--f)}
@@ -39,11 +41,12 @@ body.light .logo{color:var(--tw-dark)}
 .ni-tm{font-size:10px;color:var(--t3);flex-shrink:0}
 .np-empty{padding:22px;text-align:center;font-size:13px;color:var(--t3)}
 
+/* PROFILE */
 .pw{position:relative}
 .pb{width:36px;height:36px;border-radius:50%;border:2px solid var(--tw);overflow:hidden;cursor:pointer;background:none;padding:0;display:block}
 .pb:hover{border-color:var(--tw-light)}
 .pb img{width:100%;height:100%;object-fit:cover;display:block}
-.dd{position:absolute;top:calc(100% + 8px);right:0;background:var(--bg2);border:1px solid var(--bd2);border-radius:12px;min-width:210px;overflow:hidden;z-index:400;box-shadow:0 8px 28px rgba(0,0,0,.4);display:none}
+.dd{position:absolute;top:calc(100% + 8px);right:0;background:var(--bg2);border:1px solid var(--bd2);border-radius:12px;min-width:215px;overflow:hidden;z-index:500;box-shadow:0 8px 28px rgba(0,0,0,.4);display:none}
 .dd.open{display:block}
 .dd-hdr{padding:12px 14px;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:9px}
 .dd-av{width:34px;height:34px;border-radius:50%;overflow:hidden;flex-shrink:0}
@@ -57,6 +60,7 @@ body.light .logo{color:var(--tw-dark)}
 .dd-sep{height:1px;background:var(--bd);margin:3px 0}
 .ddi.red{color:#ff5555}.ddi.red:hover{background:#ff444412;color:#ff5555}
 
+/* STATS */
 .stats{display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap}
 .stat{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--r);padding:10px 15px;flex:1;min-width:100px}
 .stat-l{font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:2px}
@@ -65,9 +69,10 @@ body.light .logo{color:var(--tw-dark)}
 .pulse{animation:pulse 2s ease-in-out infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}
 
+/* TOOLBAR */
 .toolbar{display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap}
 .tabs{display:flex;gap:4px;flex:1;flex-wrap:wrap}
-.tab{padding:5px 12px;font-size:12px;font-weight:600;border-radius:20px;cursor:pointer;border:1px solid var(--bd2);background:none;color:var(--t2);font-family:var(--f);transition:all .15s;white-space:nowrap}
+.tab{padding:5px 12px;font-size:12px;font-weight:600;border-radius:20px;cursor:pointer;border:1px solid var(--bd2);background:none;color:var(--t2);font-family:var(--f);transition:all .15s;white-space:nowrap;user-select:none}
 .tab.active{color:#fff!important;border-color:transparent!important}
 .tab:not(.active):hover{border-color:var(--tw);color:var(--tw)}
 .tab-add{padding:5px 10px;font-size:11px;background:none;border:1px dashed var(--bd2);color:var(--t3);border-radius:20px;cursor:pointer;font-family:var(--f)}
@@ -77,14 +82,17 @@ body.light .logo{color:var(--tw-dark)}
 .si{background:var(--bg3);border:1px solid var(--bd);color:var(--t);border-radius:20px;padding:6px 12px 6px 30px;font-size:13px;font-family:var(--f);outline:none;width:175px}
 .si:focus{border-color:var(--tw)}.si::placeholder{color:var(--t3)}
 
+/* SECTION */
 .sh{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px}
 .add-btn{display:flex;align-items:center;gap:5px;background:var(--tw);color:#fff;border:none;border-radius:var(--r);padding:7px 13px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--f)}
 .add-btn:hover{background:var(--tw-dark)}
 
+/* GRID */
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin-bottom:24px}
-.card{background:var(--bg2);border:1px solid var(--bd);border-radius:11px;overflow:hidden;transition:border-color .2s,transform .15s}
+.card{background:var(--bg2);border:1px solid var(--bd);border-radius:11px;overflow:hidden;transition:border-color .2s,transform .15s;user-select:none}
 .card:hover{border-color:#9147ff77;transform:translateY(-2px)}
 
+/* THUMB */
 .thumb{width:100%;aspect-ratio:16/9;background:var(--bg3);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
 .thumb.click{cursor:pointer}
 .thumb img.sth{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}
@@ -99,6 +107,7 @@ body.light .logo{color:var(--tw-dark)}
 .vwbadge{position:absolute;bottom:7px;left:7px;background:rgba(0,0,0,.72);color:#fff;font-size:10px;padding:2px 6px;border-radius:4px;display:flex;align-items:center;gap:3px}
 .dot-r{width:5px;height:5px;border-radius:50%;background:var(--live);flex-shrink:0}
 
+/* CARD BODY */
 .cb{padding:11px}
 .ct{display:flex;align-items:center;gap:8px;margin-bottom:7px}
 .av{width:34px;height:34px;border-radius:50%;overflow:hidden;flex-shrink:0;background:var(--bg4);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;color:var(--t2)}
@@ -117,8 +126,10 @@ body.light .wb{color:var(--tw-dark)}
 .cat-pills{display:flex;gap:3px;flex-wrap:wrap;margin-top:5px}
 .cat-pill{font-size:10px;padding:2px 7px;border-radius:10px;font-weight:600;cursor:pointer;border:1px solid transparent;white-space:nowrap}
 
+/* EMPTY */
 .empty{display:flex;flex-direction:column;align-items:center;gap:10px;padding:44px 20px;background:var(--bg2);border:1px dashed var(--bd2);border-radius:11px;color:var(--t3);font-size:13px;text-align:center;grid-column:1/-1}
 
+/* LOGIN */
 .lscreen{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 20px;gap:18px;text-align:center;min-height:60vh}
 .lscreen svg.big{width:58px;height:58px;fill:var(--tw);opacity:.65}
 .lscreen h1{font-size:25px;font-weight:700;color:var(--t)}
@@ -127,7 +138,8 @@ body.light .wb{color:var(--tw-dark)}
 .lbtn:hover{background:var(--tw-dark)}
 .lbtn svg{width:16px;height:16px;fill:currentColor}
 
-.mbg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:200;align-items:flex-start;justify-content:center;padding:40px 16px;overflow-y:auto}
+/* MODALS */
+.mbg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:300;align-items:flex-start;justify-content:center;padding:40px 16px;overflow-y:auto}
 .mbg.open{display:flex}
 .mbox{background:var(--bg2);border:1px solid var(--bd2);border-radius:13px;padding:22px;width:360px;max-width:100%;margin:auto}
 .mbox h3{font-size:15px;font-weight:600;margin-bottom:14px;color:var(--t)}
@@ -139,21 +151,95 @@ body.light .wb{color:var(--tw-dark)}
 .bcl{background:var(--bg4);color:var(--t2)}.bpr{background:var(--tw);color:#fff}.bpr:hover{background:var(--tw-dark)}.bdng{background:#ff4747;color:#fff}
 .flabel{font-size:11px;color:var(--t3);margin-bottom:5px;display:block}
 
-.cpicker{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px}
-.cswatch{width:26px;height:26px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:transform .15s,border-color .15s}
+/* COLOR PICKER */
+.cpicker{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:10px}
+.cswatch{width:26px;height:26px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:transform .15s,border-color .15s;flex-shrink:0}
 .cswatch:hover{transform:scale(1.15)}
 .cswatch.sel{border-color:#fff;transform:scale(1.15)}
 body.light .cswatch.sel{border-color:#333}
-.cinput-wrap{display:flex;align-items:center;gap:8px}
-.cinput{width:38px;height:28px;border:1px solid var(--bd2);border-radius:5px;cursor:pointer;background:none;padding:2px}
+.cinput{width:36px;height:28px;border:1px solid var(--bd2);border-radius:5px;cursor:pointer;background:none;padding:2px;vertical-align:middle}
 
-.cat-checks{display:flex;flex-direction:column;gap:6px;margin-bottom:12px;max-height:160px;overflow-y:auto}
-.cat-check{display:flex;align-items:center;gap:8px;padding:5px 8px;border-radius:6px;cursor:pointer}
-.cat-check:hover{background:var(--bg3)}
-.cat-check input{accent-color:var(--tw)}
-.cat-check span{font-size:13px;color:var(--t)}
+/* CAT CHECKS - improved */
+.cat-checks{display:flex;flex-direction:column;gap:5px;margin-bottom:12px;max-height:160px;overflow-y:auto}
+.cat-check-item{display:flex;align-items:center;gap:10px;padding:6px 10px;border-radius:7px;cursor:pointer;border:1px solid transparent;transition:background .12s,border-color .12s}
+.cat-check-item:hover{background:var(--bg3);border-color:var(--bd)}
+.cat-check-item.checked{background:var(--bg3);border-color:var(--bd2)}
+.cat-check-item .cc-box{width:16px;height:16px;border-radius:4px;border:1.5px solid var(--bd2);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .12s,border-color .12s}
+.cat-check-item.checked .cc-box{border-color:var(--tw);background:var(--tw)}
+.cat-check-item.checked .cc-box::after{content:'';width:8px;height:5px;border-left:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(-45deg) translate(0px,-1px);display:block}
+.cat-check-item .cc-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.cat-check-item .cc-label{font-size:13px;color:var(--t)}
 
-.pov{display:none;position:fixed;inset:0;background:#09090b;z-index:300;flex-direction:column}
+/* IMPORT */
+.imp-list{max-height:220px;overflow-y:auto;border:1px solid var(--bd);border-radius:var(--r);margin-bottom:10px}
+.imp-row{display:flex;align-items:center;gap:9px;padding:8px 11px;border-bottom:1px solid var(--bd);cursor:pointer;transition:background .12s}
+.imp-row:last-child{border-bottom:none}
+.imp-row:hover{background:var(--bg3)}
+.imp-row.sel{background:var(--bg3)}
+.imp-chk{width:16px;height:16px;border-radius:4px;border:1.5px solid var(--bd2);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .12s}
+.imp-row.sel .imp-chk{border-color:var(--tw);background:var(--tw)}
+.imp-row.sel .imp-chk::after{content:'';width:8px;height:5px;border-left:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(-45deg) translate(0px,-1px);display:block}
+.imp-av{width:28px;height:28px;border-radius:50%;overflow:hidden;flex-shrink:0;background:var(--bg4)}
+.imp-av img{width:100%;height:100%;object-fit:cover}
+.imp-live-dot{width:7px;height:7px;border-radius:50%;background:var(--live);flex-shrink:0}
+.imp-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.imp-bar span{font-size:11px;color:var(--t3)}
+.imp-bar button{font-size:11px;background:none;border:none;color:var(--tw-light);cursor:pointer;font-family:var(--f)}
+
+/* SIDE PANEL */
+.side-panel{position:fixed;top:0;right:-440px;height:100%;width:420px;background:var(--bg2);border-left:1px solid var(--bd2);z-index:250;transition:right .3s ease;display:flex;flex-direction:column;box-shadow:-4px 0 24px rgba(0,0,0,.3)}
+.side-panel.open{right:0}
+.sp-hdr{flex-shrink:0}
+.sp-banner{width:100%;height:90px;background:var(--bg3);position:relative;overflow:hidden}
+.sp-banner img{width:100%;height:100%;object-fit:cover;display:block}
+.sp-banner-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.1),rgba(0,0,0,.6))}
+.sp-info{display:flex;align-items:flex-end;gap:10px;padding:0 14px 12px;position:absolute;bottom:0;left:0;right:0}
+.sp-av-wrap{width:42px;height:42px;border-radius:50%;overflow:hidden;flex-shrink:0;border:2px solid rgba(255,255,255,.3);background:var(--bg4)}
+.sp-av-wrap img{width:100%;height:100%;object-fit:cover}
+.sp-name-wrap{flex:1;min-width:0}
+.sp-name{font-size:15px;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sp-twitch-link{font-size:11px;color:rgba(255,255,255,.7);text-decoration:none;display:flex;align-items:center;gap:3px}
+.sp-twitch-link:hover{color:#fff}
+.sp-top-bar{display:flex;align-items:center;justify-content:space-between;padding:10px 14px 0}
+.sp-close{background:none;border:none;color:var(--t3);cursor:pointer;font-size:18px;padding:3px 6px;border-radius:4px}
+.sp-close:hover{background:var(--bg3);color:var(--t)}
+.sp-tabs{display:flex;border-bottom:1px solid var(--bd);flex-shrink:0;margin-top:8px}
+.sp-tab{flex:1;padding:10px;font-size:12px;font-weight:600;color:var(--t3);background:none;border:none;cursor:pointer;font-family:var(--f);border-bottom:2px solid transparent;transition:color .15s,border-color .15s}
+.sp-tab.active{color:var(--tw-light);border-bottom-color:var(--tw)}
+body.light .sp-tab.active{color:var(--tw-dark)}
+.sp-body{flex:1;overflow-y:auto;padding:14px}
+
+/* VOD / CLIP CARDS */
+.vod-card{background:var(--bg3);border-radius:9px;overflow:hidden;margin-bottom:12px}
+.vod-thumb{width:100%;aspect-ratio:16/9;position:relative;overflow:hidden;background:var(--bg4);cursor:pointer}
+.vod-thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}
+.vod-thumb:hover img{transform:scale(1.03)}
+.vod-dur{position:absolute;bottom:5px;right:5px;background:rgba(0,0,0,.78);color:#fff;font-size:10px;padding:1px 5px;border-radius:3px}
+.vod-plov{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.3);opacity:0;transition:opacity .2s}
+.vod-thumb:hover .vod-plov{opacity:1}
+.vod-info{padding:8px 10px 4px}
+.vod-title{font-size:12px;font-weight:600;color:var(--t);margin-bottom:2px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.vod-meta{font-size:10px;color:var(--t3)}
+.vod-actions{display:flex;gap:6px;padding:7px 10px 9px;flex-wrap:wrap}
+.va-btn{font-size:10px;font-weight:600;padding:3px 8px;border-radius:5px;cursor:pointer;font-family:var(--f);border:1px solid var(--bd2);background:none;color:var(--t2);transition:all .12s}
+.va-btn:hover{border-color:var(--tw);color:var(--tw-light)}
+body.light .va-btn:hover{color:var(--tw-dark)}
+.va-btn.dl{color:var(--online);border-color:#00b26e44}.va-btn.dl:hover{background:#00b26e12}
+
+/* AI BOX */
+.ai-box{background:var(--bg4);border:1px solid var(--bd2);border-radius:7px;padding:10px 11px;margin:0 10px 7px;font-size:12px;color:var(--t2);line-height:1.6;display:none}
+.ai-box.show{display:block}
+.ai-box-title{color:var(--t);font-size:11px;font-weight:600;margin-bottom:5px;display:flex;align-items:center;gap:5px}
+.gbadge{font-size:9px;padding:1px 5px;border-radius:8px;background:linear-gradient(90deg,#4285f4,#9b59b6);color:#fff;font-weight:600}
+
+/* LOADING */
+.sp-loading{display:flex;align-items:center;justify-content:center;gap:6px;padding:30px;color:var(--t3);font-size:13px}
+.ldot{width:7px;height:7px;border-radius:50%;background:var(--tw);animation:blink 1s infinite}
+.ldot:nth-child(2){animation-delay:.2s}.ldot:nth-child(3){animation-delay:.4s}
+@keyframes blink{0%,80%,100%{opacity:.2}40%{opacity:1}}
+
+/* PLAYER */
+.pov{display:none;position:fixed;inset:0;background:#09090b;z-index:400;flex-direction:column}
 .pov.open{display:flex}
 .ph{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:1px solid var(--bd);flex-shrink:0;background:var(--bg2);gap:10px;flex-wrap:wrap}
 .pi{display:flex;align-items:center;gap:10px;flex:1;min-width:0}
@@ -175,64 +261,16 @@ body.light .cswatch.sel{border-color:#333}
 .pchat-hdr{padding:8px 12px;border-bottom:1px solid var(--bd);font-size:12px;font-weight:600;color:var(--t2);display:flex;align-items:center;gap:5px;flex-shrink:0}
 .pchat iframe{flex:1;border:none;width:100%;height:calc(100% - 34px)}
 
-.side-panel{position:fixed;top:0;right:-440px;height:100%;width:420px;background:var(--bg2);border-left:1px solid var(--bd2);z-index:250;transition:right .3s ease;display:flex;flex-direction:column;box-shadow:-4px 0 24px rgba(0,0,0,.3)}
-.side-panel.open{right:0}
-.sp-hdr{display:flex;align-items:center;justify-content:space-between;padding:15px 18px;border-bottom:1px solid var(--bd);flex-shrink:0}
-.sp-hdr h3{font-size:15px;font-weight:600;color:var(--t)}
-.sp-close{background:none;border:none;color:var(--t3);cursor:pointer;font-size:18px;padding:2px 5px;border-radius:4px}
-.sp-close:hover{background:var(--bg3);color:var(--t)}
-.sp-tabs{display:flex;border-bottom:1px solid var(--bd);flex-shrink:0}
-.sp-tab{flex:1;padding:10px;font-size:12px;font-weight:600;color:var(--t3);background:none;border:none;cursor:pointer;font-family:var(--f);border-bottom:2px solid transparent;transition:color .15s,border-color .15s}
-.sp-tab.active{color:var(--tw-light);border-bottom-color:var(--tw)}
-body.light .sp-tab.active{color:var(--tw-dark)}
-.sp-body{flex:1;overflow-y:auto;padding:14px}
+/* CONTEXT MENU */
+.ctx-menu{position:fixed;background:var(--bg2);border:1px solid var(--bd2);border-radius:9px;min-width:175px;overflow:hidden;z-index:999;box-shadow:0 6px 24px rgba(0,0,0,.4);display:none}
+.ctx-menu.open{display:block}
+.ctx-item{display:flex;align-items:center;gap:9px;padding:9px 14px;font-size:12px;color:var(--t2);cursor:pointer;border:none;background:none;width:100%;text-align:left;font-family:var(--f);transition:background .12s}
+.ctx-item:hover{background:var(--bg3);color:var(--t)}
+.ctx-item svg{width:13px;height:13px;flex-shrink:0;opacity:.6}
+.ctx-sep{height:1px;background:var(--bd);margin:3px 0}
+.ctx-item.red{color:#ff5555}.ctx-item.red:hover{background:#ff444412;color:#ff5555}
 
-.vod-card{background:var(--bg3);border-radius:9px;overflow:hidden;margin-bottom:12px}
-.vod-thumb{width:100%;aspect-ratio:16/9;position:relative;overflow:hidden;background:var(--bg4);cursor:pointer}
-.vod-thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}
-.vod-thumb:hover img{transform:scale(1.03)}
-.vod-dur{position:absolute;bottom:5px;right:5px;background:rgba(0,0,0,.78);color:#fff;font-size:10px;padding:1px 5px;border-radius:3px}
-.vod-info{padding:8px 10px}
-.vod-title{font-size:12px;font-weight:600;color:var(--t);margin-bottom:2px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.vod-meta{font-size:10px;color:var(--t3)}
-.vod-actions{display:flex;gap:6px;padding:0 10px 9px;flex-wrap:wrap}
-.va-btn{font-size:10px;font-weight:600;padding:3px 8px;border-radius:5px;cursor:pointer;font-family:var(--f);border:1px solid var(--bd2);background:none;color:var(--t2);transition:border-color .15s,color .15s}
-.va-btn:hover{border-color:var(--tw);color:var(--tw-light)}
-body.light .va-btn:hover{color:var(--tw-dark)}
-.va-btn.dl{color:var(--online);border-color:#00b26e44}
-.va-btn.dl:hover{background:#00b26e12}
-
-.ai-box{background:var(--bg4);border:1px solid var(--bd2);border-radius:8px;padding:11px;margin:0 10px 8px;font-size:12px;color:var(--t2);line-height:1.6;display:none}
-.ai-box.show{display:block}
-.ai-box strong{color:var(--t);display:block;margin-bottom:5px;font-size:12px;display:flex;align-items:center;gap:5px}
-/* Gemini logo colors */
-.gemini-badge{font-size:10px;padding:1px 6px;border-radius:10px;background:linear-gradient(90deg,#4285f4,#9b59b6);color:#fff;font-weight:600}
-
-.clip-card{background:var(--bg3);border-radius:9px;overflow:hidden;margin-bottom:10px;cursor:pointer;transition:transform .15s}
-.clip-card:hover{transform:translateY(-1px)}
-.sp-loading{display:flex;align-items:center;justify-content:center;gap:6px;padding:30px;color:var(--t3);font-size:13px}
-.ldot{width:7px;height:7px;border-radius:50%;background:var(--tw);animation:blink 1s infinite}
-.ldot:nth-child(2){animation-delay:.2s}.ldot:nth-child(3){animation-delay:.4s}
-@keyframes blink{0%,80%,100%{opacity:.2}40%{opacity:1}}
-
-/* Gemini key modal */
-.gemini-info{background:var(--bg3);border-radius:8px;padding:12px;margin-bottom:14px;font-size:12px;color:var(--t2);line-height:1.7}
-.gemini-info strong{color:var(--t)}
-.gemini-info a{color:var(--tw-light);text-decoration:none}
-body.light .gemini-info a{color:var(--tw-dark)}
-.gemini-info ol{padding-left:16px;margin-top:4px}
-
-.imp-list{max-height:210px;overflow-y:auto;border:1px solid var(--bd);border-radius:var(--r);margin-bottom:10px}
-.imp-item{display:flex;align-items:center;gap:8px;padding:7px 10px;border-bottom:1px solid var(--bd);cursor:pointer}
-.imp-item:last-child{border-bottom:none}
-.imp-item:hover{background:var(--bg3)}
-.imp-item input{accent-color:var(--tw);flex-shrink:0}
-.imp-av{width:26px;height:26px;border-radius:50%;overflow:hidden;flex-shrink:0;background:var(--bg4)}
-.imp-av img{width:100%;height:100%;object-fit:cover}
-.imp-live{width:7px;height:7px;border-radius:50%;background:var(--live);flex-shrink:0}
-.imp-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:7px}
-.imp-bar button{font-size:11px;background:none;border:none;color:var(--tw-light);cursor:pointer;font-family:var(--f)}
-
+/* TOAST */
 .toast{position:fixed;bottom:20px;right:20px;background:var(--bg2);border:1px solid var(--tw);border-radius:10px;padding:11px 14px;display:flex;align-items:center;gap:9px;z-index:999;box-shadow:0 4px 20px rgba(0,0,0,.4);animation:slin .3s ease;max-width:270px;cursor:pointer}
 @keyframes slin{from{transform:translateX(110%);opacity:0}to{transform:translateX(0);opacity:1}}
 .toast-av{width:34px;height:34px;border-radius:50%;overflow:hidden;flex-shrink:0}
@@ -286,7 +324,6 @@ body.light .gemini-info a{color:var(--tw-dark)}
           <div class="dd-hdr"><div class="dd-av"><img id="ddAv" src="" alt=""></div><div><div class="dd-name" id="ddName"></div><div class="dd-login" id="ddLogin"></div></div></div>
           <div class="dd-items">
             <button class="ddi" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg><span id="themeLabel">Mode clair</span></button>
-            <button class="ddi" onclick="openGeminiKeyModal()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>Clé API Gemini</button>
             <div class="dd-sep"></div>
             <button class="ddi red" onclick="openConfirmClear()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6M10 11v6M14 11v6M9 6V4h6v2"/></svg>Supprimer mes données</button>
             <button class="ddi red" onclick="logout()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>Déconnexion</button>
@@ -321,11 +358,21 @@ body.light .gemini-info a{color:var(--tw-dark)}
 <!-- SIDE PANEL -->
 <div class="side-panel" id="sidePanel">
   <div class="sp-hdr">
-    <div style="display:flex;align-items:center;gap:9px">
-      <div style="width:32px;height:32px;border-radius:50%;overflow:hidden;flex-shrink:0;background:var(--bg4)"><img id="sp-avimg" src="" alt="" style="width:100%;height:100%;object-fit:cover"></div>
-      <h3 id="sp-title">Streamer</h3>
+    <div style="position:relative">
+      <div class="sp-banner"><img id="sp-banner" src="" alt="" onerror="this.parentElement.style.background='var(--bg4)'"><div class="sp-banner-overlay"></div>
+        <div class="sp-info">
+          <div class="sp-av-wrap"><img id="sp-avimg" src="" alt=""></div>
+          <div class="sp-name-wrap">
+            <div class="sp-name" id="sp-name">Streamer</div>
+            <a class="sp-twitch-link" id="sp-link" href="#" target="_blank">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0z"/></svg>
+              Voir la chaîne
+            </a>
+          </div>
+        </div>
+      </div>
+      <button class="sp-close" style="position:absolute;top:8px;right:8px;background:rgba(0,0,0,.5);color:#fff;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:14px" onclick="closeSidePanel()">✕</button>
     </div>
-    <button class="sp-close" onclick="closeSidePanel()">✕</button>
   </div>
   <div class="sp-tabs">
     <button class="sp-tab active" id="tab-vods" onclick="switchSpTab('vods')">Rediffusions</button>
@@ -351,11 +398,14 @@ body.light .gemini-info a{color:var(--tw-dark)}
   <div class="pbody">
     <div class="pstream" id="pstream"></div>
     <div class="pchat">
-      <div class="pchat-hdr"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="opacity:.5"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>Chat en direct</div>
+      <div class="pchat-hdr"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="opacity:.5"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>Chat</div>
       <iframe id="chatFrame" src="" allowfullscreen></iframe>
     </div>
   </div>
 </div>
+
+<!-- CONTEXT MENU -->
+<div class="ctx-menu" id="ctxMenu"></div>
 
 <!-- MODALS -->
 <div class="mbg" id="addModal">
@@ -370,18 +420,18 @@ body.light .gemini-info a{color:var(--tw-dark)}
 
 <div class="mbg" id="catModal">
   <div class="mbox">
-    <h3>Nouvelle catégorie</h3>
+    <h3 id="catModalTitle">Nouvelle catégorie</h3>
     <input class="mi" id="catInput" placeholder="Nom (ex: FPS, FR, Amis...)">
     <label class="flabel">Couleur</label>
     <div class="cpicker" id="cpicker"></div>
-    <div class="cinput-wrap" style="margin-bottom:12px"><label class="flabel" style="margin:0;margin-right:4px">Personnalisée :</label><input type="color" class="cinput" id="customColor" value="#9147ff" oninput="setCustomColor(this.value)"></div>
-    <div class="mbtns"><button class="bcl" onclick="closeCatModal()">Annuler</button><button class="bpr" onclick="addCategory()">Créer</button></div>
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px"><label class="flabel" style="margin:0;margin-right:2px">Personnalisée :</label><input type="color" class="cinput" id="customColor" value="#9147ff" oninput="setCustomColor(this.value)"></div>
+    <div class="mbtns"><button class="bcl" onclick="closeCatModal()">Annuler</button><button class="bpr" id="catModalBtn" onclick="submitCatModal()">Créer</button></div>
   </div>
 </div>
 
 <div class="mbg" id="editCatModal">
   <div class="mbox">
-    <h3>Catégories de <span id="editCatName"></span></h3>
+    <h3>Catégories de <span id="editCatName" style="color:var(--tw-light)"></span></h3>
     <div class="cat-checks" id="catChecksEdit"></div>
     <div class="mbtns"><button class="bpr" onclick="closeEditCat()">Fermer</button></div>
   </div>
@@ -392,25 +442,6 @@ body.light .gemini-info a{color:var(--tw-dark)}
     <h3>Supprimer toutes les données ?</h3>
     <p>Ta liste, catégories, notifications et préférences seront effacées.</p>
     <div class="mbtns"><button class="bcl" onclick="closeConfirmClear()">Annuler</button><button class="bdng" onclick="clearAllData()">Supprimer</button></div>
-  </div>
-</div>
-
-<!-- GEMINI KEY MODAL -->
-<div class="mbg" id="geminiKeyModal">
-  <div class="mbox">
-    <h3>Clé API Gemini <span class="gemini-badge">Gratuit</span></h3>
-    <div class="gemini-info">
-      <strong>Comment obtenir ta clé gratuite :</strong>
-      <ol>
-        <li>Va sur <a href="https://aistudio.google.com" target="_blank">aistudio.google.com</a></li>
-        <li>Connecte-toi avec Google</li>
-        <li>Clique <strong>Get API Key</strong> → <strong>Create API Key</strong></li>
-        <li>Copie la clé et colle-la ci-dessous</li>
-      </ol>
-      <br>1 500 résumés/jour gratuits. Aucune CB requise.
-    </div>
-    <input class="mi" id="geminiKeyInput" type="password" placeholder="AIza...">
-    <div class="mbtns"><button class="bcl" onclick="closeGeminiKeyModal()">Annuler</button><button class="bpr" onclick="saveGeminiKey()">Sauvegarder</button></div>
   </div>
 </div>
 
@@ -426,32 +457,35 @@ body.light .gemini-info a{color:var(--tw-dark)}
 <script>
 const CLIENT_ID = 'jtbtny7cquvoctus5ttpme26d00keh';
 const REDIRECT = location.href.split('#')[0].split('?')[0];
+const GEMINI_KEY = 'AIzaSyAMlApklqdngBdfNVr441XvLMiuitgkMCc';
 const PRESET_COLORS = ['#9147ff','#e91916','#00b26e','#f59812','#4b85c8','#e06ac0','#2bbbad','#e8a838','#6ab04c','#c0392b'];
 
 let token=null, user=null;
 let streamers = JSON.parse(localStorage.getItem('fbwl_streamers')||'[]');
 let streamerCats = JSON.parse(localStorage.getItem('fbwl_streamerCats')||'{}');
 let categories = JSON.parse(localStorage.getItem('fbwl_categories')||'[{"name":"Tous","color":"#9147ff"}]');
+// userData: cache for user info (avatar, userId, displayName, banner) — persisted
+let userData = JSON.parse(localStorage.getItem('fbwl_userData')||'{}');
 let streamData={}, notifs=JSON.parse(localStorage.getItem('fbwl_notifs')||'[]');
 let prevLive=new Set(JSON.parse(localStorage.getItem('fbwl_prevLive')||'[]'));
 let activeTab='Tous', isDark=localStorage.getItem('fbwl_theme')!=='light';
 let currentPlayer=null, spStreamer=null, spTab='vods';
 let selectedCatAdd=new Set(), pickedColor='#9147ff';
 let importSel=new Set(), editingStreamer=null;
-let geminiKey=localStorage.getItem('fbwl_geminikey')||'';
+let editingCatName=null;
+let importFollowsData=[];
 
 function saveAll(){
   localStorage.setItem('fbwl_streamers',JSON.stringify(streamers));
   localStorage.setItem('fbwl_streamerCats',JSON.stringify(streamerCats));
   localStorage.setItem('fbwl_categories',JSON.stringify(categories));
+  localStorage.setItem('fbwl_userData',JSON.stringify(userData));
 }
 
-// ── AUTH ──────────────────────────────────────────────
-function startLogin(){
-  location.href=`https://id.twitch.tv/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT)}&response_type=token&scope=${encodeURIComponent('user:read:email user:read:follows')}`;
-}
+// ═══ AUTH ══════════════════════════════════════════════
+function startLogin(){location.href=`https://id.twitch.tv/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT)}&response_type=token&scope=${encodeURIComponent('user:read:email user:read:follows')}`;}
 function logout(){token=null;user=null;localStorage.removeItem('fbwl_token');localStorage.removeItem('fbwl_user');closeDd();document.getElementById('loginScreen').style.display='flex';document.getElementById('mainApp').style.display='none';}
-function clearAllData(){streamers=[];streamerCats={};categories=[{name:'Tous',color:'#9147ff'}];notifs=[];prevLive=new Set();['fbwl_streamers','fbwl_streamerCats','fbwl_categories','fbwl_notifs','fbwl_prevLive'].forEach(k=>localStorage.removeItem(k));activeTab='Tous';closeConfirmClear();closeDd();renderTabs();render();}
+function clearAllData(){streamers=[];streamerCats={};categories=[{name:'Tous',color:'#9147ff'}];notifs=[];prevLive=new Set();userData={};['fbwl_streamers','fbwl_streamerCats','fbwl_categories','fbwl_notifs','fbwl_prevLive','fbwl_userData'].forEach(k=>localStorage.removeItem(k));activeTab='Tous';closeConfirmClear();closeDd();renderTabs();render();}
 
 async function initAuth(){
   applyTheme();
@@ -468,33 +502,75 @@ async function initAuth(){
     ['profImg','ddAv'].forEach(id=>document.getElementById(id).src=user.profile_image_url);
     document.getElementById('ddName').textContent=user.display_name;
     document.getElementById('ddLogin').textContent='@'+user.login;
-    renderTabs();await refreshData();
+    renderTabs();
+    await refreshData();
     setInterval(refreshData,60000);
   }catch(e){localStorage.removeItem('fbwl_token');localStorage.removeItem('fbwl_user');document.getElementById('loginScreen').style.display='flex';}
 }
 
-// ── TWITCH API ────────────────────────────────────────
+// ═══ TWITCH API ════════════════════════════════════════
 async function tGet(url){
   const r=await fetch(url,{headers:{'Client-ID':CLIENT_ID,'Authorization':'Bearer '+token}});
   if(!r.ok)throw new Error(r.status);return r.json();
 }
+
+// Fetch user data (avatar, id, displayName, offline_image) for all streamers
+// Uses cache — only fetches what's missing or stale
+async function ensureUserData(names){
+  const missing=names.filter(n=>{
+    const key=n.toLowerCase();
+    return !userData[key]||!userData[key].userId;
+  });
+  if(!missing.length)return;
+  // Chunk by 100
+  for(let i=0;i<missing.length;i+=100){
+    const chunk=missing.slice(i,i+100);
+    const q=chunk.map(n=>'login='+encodeURIComponent(n.toLowerCase())).join('&');
+    try{
+      const r=await tGet(`https://api.twitch.tv/helix/users?${q}`);
+      r.data.forEach(u=>{
+        userData[u.login.toLowerCase()]={
+          userId:u.id,
+          displayName:u.display_name,
+          avatar:u.profile_image_url,
+          banner:u.offline_image_url||''
+        };
+      });
+    }catch(e){console.error('ensureUserData error',e);}
+  }
+  saveAll();
+}
+
 async function fetchData(){
   if(!streamers.length)return{};
+  // First ensure we have user data for everyone
+  await ensureUserData(streamers);
   const result={};
+  // Fetch live streams
   for(let i=0;i<streamers.length;i+=100){
     const chunk=streamers.slice(i,i+100);
     const q=chunk.map(n=>'user_login='+encodeURIComponent(n.toLowerCase())).join('&');
-    const[sr,ur]=await Promise.all([tGet(`https://api.twitch.tv/helix/streams?${q}&first=100`),tGet(`https://api.twitch.tv/helix/users?${q}`)]);
-    const sm={},um={};
-    sr.data.forEach(s=>sm[s.user_login.toLowerCase()]=s);
-    ur.data.forEach(u=>um[u.login.toLowerCase()]=u);
-    for(const name of chunk){
-      const key=name.toLowerCase(),s=sm[key],u=um[key];
-      result[name]=s?{live:true,viewers:s.viewer_count,game:s.game_name,title:s.title,thumb:s.thumbnail_url.replace('{width}','440').replace('{height}','248'),avatar:u?.profile_image_url||'',displayName:u?.display_name||name,userId:u?.id||''}:{live:false,viewers:0,game:'',title:'',thumb:'',avatar:u?.profile_image_url||'',displayName:u?.display_name||name,userId:u?.id||''};
-    }
+    try{
+      const sr=await tGet(`https://api.twitch.tv/helix/streams?${q}&first=100`);
+      const sm={};sr.data.forEach(s=>sm[s.user_login.toLowerCase()]=s);
+      for(const name of chunk){
+        const key=name.toLowerCase();
+        const s=sm[key];
+        const u=userData[key]||{};
+        if(s){
+          result[name]={live:true,viewers:s.viewer_count,game:s.game_name,title:s.title,
+            thumb:s.thumbnail_url.replace('{width}','440').replace('{height}','248'),
+            avatar:u.avatar||'',displayName:u.displayName||name,userId:u.userId||'',banner:u.banner||''};
+        }else{
+          result[name]={live:false,viewers:0,game:'',title:'',thumb:'',
+            avatar:u.avatar||'',displayName:u.displayName||name,userId:u.userId||'',banner:u.banner||''};
+        }
+      }
+    }catch(e){console.error('fetchData error',e);}
   }
   return result;
 }
+
 async function refreshData(){
   document.getElementById('refreshIcon').classList.add('spin');
   try{const nd=await fetchData();checkNotifs(nd);streamData=nd;}catch(e){console.error(e);}
@@ -502,7 +578,7 @@ async function refreshData(){
 }
 async function refreshAll(){await refreshData();}
 
-// ── NOTIFICATIONS ─────────────────────────────────────
+// ═══ NOTIFICATIONS ══════════════════════════════════════
 function checkNotifs(nd){
   for(const[name,d]of Object.entries(nd)){
     if(d.live&&!prevLive.has(name.toLowerCase())){
@@ -523,8 +599,8 @@ function showToast(n){
   setTimeout(()=>{el.style.animation='slin .3s ease reverse';setTimeout(()=>el.remove(),300);},4000);
 }
 function renderNotifUI(){
-  const dot=document.getElementById('ndot'),list=document.getElementById('nlist');
-  notifs.length>0?dot.classList.add('on'):dot.classList.remove('on');
+  document.getElementById('ndot').className='ndot'+(notifs.length?'on':' ');
+  const list=document.getElementById('nlist');
   if(!notifs.length){list.innerHTML='<div class="np-empty">Aucune notification</div>';return;}
   list.innerHTML=notifs.map(n=>`<div class="ni" onclick="openPlayer('${n.name}');closeNotif()"><div class="ni-av"><img src="${n.avatar}" alt=""></div><div class="ni-tx"><strong>${n.displayName}</strong> est passé en live${n.game?' — '+n.game:''}</div><div class="ni-tm">${n.time}</div></div>`).join('');
 }
@@ -532,17 +608,17 @@ function clearNotifs(){notifs=[];localStorage.removeItem('fbwl_notifs');renderNo
 function toggleNotif(){closeDd();document.getElementById('npanel').classList.toggle('open');}
 function closeNotif(){document.getElementById('npanel').classList.remove('open');}
 
-// ── RENDER ────────────────────────────────────────────
+// ═══ RENDER ════════════════════════════════════════════
 function fmt(n){return n>=1000?(n/1000).toFixed(1).replace('.0','')+'K':String(n);}
 function catColor(name){const c=categories.find(c=>c.name===name);return c?c.color:'#9147ff';}
 
 function renderTabs(){
   document.getElementById('tabs').innerHTML=categories.map(c=>{
     const active=c.name===activeTab;
-    return`<button class="tab${active?' active':''}" style="${active?`background:${c.color};`:''}" onclick="setTab('${c.name}')">${c.name}</button>`;
+    return`<button class="tab${active?' active':''}" style="${active?`background:${c.color};`:''}" onclick="setTab('${c.name}')" oncontextmenu="tabContextMenu(event,'${c.name}')">${c.name}</button>`;
   }).join('')+`<button class="tab-add" onclick="openCatModal()">+ Catégorie</button>`;
 }
-function setTab(name){activeTab=name;document.getElementById('si').value='';renderTabs();render();}
+function setTab(n){activeTab=n;document.getElementById('si').value='';renderTabs();render();}
 
 function render(){
   const grid=document.getElementById('grid');
@@ -559,31 +635,96 @@ function render(){
   document.getElementById('offlineCount').textContent=streamers.length-liveN;
   document.getElementById('viewerCount').textContent=fmt(totalV);
   document.getElementById('secTitle').textContent=activeTab==='Tous'?'Tous les streamers':activeTab;
-  if(!filtered.length){grid.innerHTML=`<div class="empty"><svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor" opacity=".2"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0z"/></svg>${streamers.length?'Aucun streamer dans cette catégorie.':'Aucun streamer suivi.<br>Clique sur <strong>Ajouter</strong> pour commencer.'}</div>`;return;}
+  if(!filtered.length){grid.innerHTML=`<div class="empty"><svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor" opacity=".2"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0z"/></svg>${streamers.length?'Aucun streamer dans cette catégorie.':'Aucun streamer.<br>Clique sur <strong>Ajouter</strong> pour commencer.'}</div>`;return;}
   for(const name of filtered){
-    const d=streamData[name]||{live:false,viewers:0,game:'',title:'',thumb:'',avatar:'',displayName:name};
+    const d=streamData[name]||{live:false,viewers:0,game:'',title:'',thumb:'',avatar:'',displayName:name,userId:''};
+    // Also pull from userData cache if streamData avatar is empty
+    const ukey=name.toLowerCase();
+    const avatar=d.avatar||(userData[ukey]?.avatar||'');
+    const displayName=d.displayName||(userData[ukey]?.displayName||name);
     const cats=(streamerCats[name]||[]).filter(c=>c!=='Tous');
     const card=document.createElement('div');card.className='card';
-    const thumbContent=d.live?`${d.thumb?`<img class="sth" src="${d.thumb}" alt="">`:`<div style="width:100%;height:100%;background:#9147ff12;display:flex;align-items:center;justify-content:center"><svg width="36" height="36" viewBox="0 0 24 24" fill="#9147ff" opacity=".25"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0z"/></svg></div>`}<span class="lbadge">LIVE</span><span class="vwbadge"><span class="dot-r"></span>${fmt(d.viewers)}</span><div class="plov"><div class="plc"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="#fff"/></svg></div></div>`:`<div class="th-ph"><svg viewBox="0 0 24 24"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0z"/></svg></div>`;
+    card.setAttribute('data-name',name);
+    card.addEventListener('contextmenu',e=>cardContextMenu(e,name));
+    const thumbContent=d.live?`${d.thumb?`<img class="sth" src="${d.thumb}" alt="" onerror="this.style.display='none'">`:`<div style="width:100%;height:100%;background:#9147ff12;display:flex;align-items:center;justify-content:center"><svg width="36" height="36" viewBox="0 0 24 24" fill="#9147ff" opacity=".25"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0z"/></svg></div>`}<span class="lbadge">LIVE</span><span class="vwbadge"><span class="dot-r"></span>${fmt(d.viewers)}</span><div class="plov"><div class="plc"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="#fff"/></svg></div></div>`:`<div class="th-ph"><svg viewBox="0 0 24 24"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0z"/></svg></div>`;
     const catPills=cats.map(c=>`<span class="cat-pill" style="background:${catColor(c)}22;color:${catColor(c)};border-color:${catColor(c)}44" onclick="setTab('${c}')">${c}</span>`).join('');
-    card.innerHTML=`<div class="thumb${d.live?' click':''}" ${d.live?`onclick="openPlayer('${name}')"`:''}>${thumbContent}</div><div class="cb"><div class="ct"><div class="av">${d.avatar?`<img src="${d.avatar}" alt="">`:`<span>${(d.displayName||name).slice(0,2).toUpperCase()}</span>`}</div><div style="flex:1;min-width:0"><div class="cname">${d.displayName||name}</div><div class="cst${d.live?'':' off'}">${d.live?'● En live':'○ Hors ligne'}</div></div><button class="rm-btn" onclick="removeStreamer('${name}')">✕</button></div>${d.live?`<div class="cgame">${d.game||''}</div><div class="ctxt">${d.title||''}</div>`:`<div class="cgame" style="color:var(--t3)">Pas de stream en cours</div>`}${catPills?`<div class="cat-pills">${catPills}</div>`:''}</div><div class="cf"><div style="display:flex;gap:5px;flex-wrap:wrap">${d.live?`<button class="wb" onclick="openPlayer('${name}')">▶ Regarder</button>`:''}<button class="wb" onclick="openSidePanel('${name}')">📼 VODs / Clips</button></div><button class="wb" style="border-color:transparent;color:var(--t3);font-size:10px" onclick="openEditCat('${name}')">⚙ Cats</button></div>`;
+    card.innerHTML=`<div class="thumb${d.live?' click':''}" ${d.live?`onclick="openPlayer('${name}')"`:''}>${thumbContent}</div><div class="cb"><div class="ct"><div class="av">${avatar?`<img src="${avatar}" alt="" onerror="this.style.display='none'">`:`<span>${displayName.slice(0,2).toUpperCase()}</span>`}</div><div style="flex:1;min-width:0"><div class="cname">${displayName}</div><div class="cst${d.live?'':' off'}">${d.live?'● En live':'○ Hors ligne'}</div></div><button class="rm-btn" onclick="removeStreamer('${name}')">✕</button></div>${d.live?`<div class="cgame">${d.game||''}</div><div class="ctxt">${d.title||''}</div>`:`<div class="cgame" style="color:var(--t3)">Pas de stream en cours</div>`}${catPills?`<div class="cat-pills">${catPills}</div>`:''}</div><div class="cf"><div style="display:flex;gap:5px;flex-wrap:wrap">${d.live?`<button class="wb" onclick="openPlayer('${name}')">▶ Regarder</button>`:''}<button class="wb" onclick="openSidePanel('${name}')">📼 VODs / Clips</button></div><button class="wb" style="border-color:transparent;color:var(--t3);font-size:10px" onclick="openEditCat('${name}')">⚙ Réglages</button></div>`;
     grid.appendChild(card);
   }
 }
 
-// ── ADD / REMOVE ──────────────────────────────────────
+// ═══ CONTEXT MENUS ════════════════════════════════════
+function cardContextMenu(e,name){
+  e.preventDefault();
+  const d=streamData[name]||{};
+  showCtxMenu(e.clientX,e.clientY,[
+    {icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>',label:'Voir VODs / Clips',action:()=>openSidePanel(name)},
+    ...(d.live?[{icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>',label:'Regarder le live',action:()=>openPlayer(name)}]:[]),
+    {icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14"/></svg>',label:'Gérer les catégories',action:()=>openEditCat(name)},
+    'sep',
+    {icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>',label:'Ouvrir sur Twitch',action:()=>window.open('https://twitch.tv/'+name.toLowerCase(),'_blank')},
+    'sep',
+    {icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg>',label:'Retirer',action:()=>removeStreamer(name),red:true},
+  ]);
+}
+
+function tabContextMenu(e,catName){
+  e.preventDefault();
+  if(catName==='Tous')return;
+  showCtxMenu(e.clientX,e.clientY,[
+    {icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>',label:'Renommer / couleur',action:()=>openEditCatModal(catName)},
+    'sep',
+    {icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg>',label:'Supprimer la catégorie',action:()=>deleteCategory(catName),red:true},
+  ]);
+}
+
+function showCtxMenu(x,y,items){
+  const menu=document.getElementById('ctxMenu');
+  menu.innerHTML=items.map(item=>{
+    if(item==='sep')return`<div class="ctx-sep"></div>`;
+    return`<button class="ctx-item${item.red?' red':''}" onclick="hideCtxMenu();(${item.action.toString()})()">
+      ${item.icon||''}<span>${item.label}</span></button>`;
+  }).join('');
+  // Position
+  menu.style.display='block';
+  const w=menu.offsetWidth,h=menu.offsetHeight;
+  const vw=window.innerWidth,vh=window.innerHeight;
+  menu.style.left=Math.min(x,vw-w-8)+'px';
+  menu.style.top=Math.min(y,vh-h-8)+'px';
+  menu.classList.add('open');
+}
+function hideCtxMenu(){document.getElementById('ctxMenu').classList.remove('open');}
+document.addEventListener('click',()=>hideCtxMenu());
+
+// ═══ ADD / REMOVE STREAMER ══════════════════════════════
 function openAddModal(){selectedCatAdd=new Set();renderCatChecks('catChecksAdd',selectedCatAdd);document.getElementById('addModal').classList.add('open');setTimeout(()=>document.getElementById('nameInput').focus(),50);}
 function closeAddModal(){document.getElementById('addModal').classList.remove('open');document.getElementById('nameInput').value='';}
-function renderCatChecks(cid,selSet){
-  const el=document.getElementById(cid);
+
+function renderCatChecks(containerId,selSet){
+  const el=document.getElementById(containerId);
   const cats=categories.filter(c=>c.name!=='Tous');
-  if(!cats.length){el.innerHTML='<div style="font-size:12px;color:var(--t3);padding:4px">Aucune catégorie créée</div>';return;}
-  el.innerHTML=cats.map(c=>`<label class="cat-check"><input type="checkbox" ${selSet.has(c.name)?'checked':''} onchange="catToggle('${cid}','${c.name}',this.checked)"><span style="width:10px;height:10px;border-radius:50%;background:${c.color};flex-shrink:0;display:inline-block"></span><span>${c.name}</span></label>`).join('');
+  if(!cats.length){el.innerHTML='<div style="font-size:12px;color:var(--t3);padding:4px">Aucune catégorie créée. Crée-en une d\'abord.</div>';return;}
+  el.innerHTML=cats.map(c=>`
+    <div class="cat-check-item${selSet.has(c.name)?' checked':''}" onclick="catCheckClick('${containerId}','${c.name}',this)">
+      <div class="cc-box"></div>
+      <div class="cc-dot" style="background:${c.color}"></div>
+      <span class="cc-label">${c.name}</span>
+    </div>`).join('');
 }
-function catToggle(cid,name,checked){
+
+function catCheckClick(cid,name,el){
+  const checked=!el.classList.contains('checked');
+  el.classList.toggle('checked');
   if(cid==='catChecksAdd'){checked?selectedCatAdd.add(name):selectedCatAdd.delete(name);}
-  else if(cid==='catChecksEdit'&&editingStreamer){let cats=streamerCats[editingStreamer]||[];if(checked&&!cats.includes(name))cats.push(name);if(!checked)cats=cats.filter(c=>c!==name);streamerCats[editingStreamer]=cats;saveAll();render();}
+  else if(cid==='catChecksEdit'&&editingStreamer){
+    let cats=streamerCats[editingStreamer]||[];
+    if(checked&&!cats.includes(name))cats.push(name);
+    if(!checked)cats=cats.filter(c=>c!==name);
+    streamerCats[editingStreamer]=cats;
+    saveAll();render();
+  }
 }
+
 async function addStreamer(){
   const v=document.getElementById('nameInput').value.trim();if(!v)return;
   if(streamers.map(s=>s.toLowerCase()).includes(v.toLowerCase())){closeAddModal();return;}
@@ -593,24 +734,80 @@ async function addStreamer(){
 }
 function removeStreamer(name){if(currentPlayer===name)closePlayer();if(spStreamer===name)closeSidePanel();streamers=streamers.filter(s=>s!==name);delete streamerCats[name];delete streamData[name];saveAll();render();}
 
-// ── EDIT CATS ─────────────────────────────────────────
-function openEditCat(name){editingStreamer=name;document.getElementById('editCatName').textContent=streamData[name]?.displayName||name;renderCatChecks('catChecksEdit',new Set(streamerCats[name]||[]));document.getElementById('editCatModal').classList.add('open');}
+// ═══ EDIT STREAMER CATS ════════════════════════════════
+function openEditCat(name){
+  editingStreamer=name;
+  const d=streamData[name]||{};
+  document.getElementById('editCatName').textContent=d.displayName||name;
+  renderCatChecks('catChecksEdit',new Set(streamerCats[name]||[]));
+  document.getElementById('editCatModal').classList.add('open');
+}
 function closeEditCat(){document.getElementById('editCatModal').classList.remove('open');editingStreamer=null;}
 document.getElementById('editCatModal').addEventListener('click',e=>{if(e.target===document.getElementById('editCatModal'))closeEditCat();});
 
-// ── CATEGORIES ────────────────────────────────────────
-function openCatModal(){pickedColor='#9147ff';renderColorPicker();document.getElementById('customColor').value=pickedColor;document.getElementById('catModal').classList.add('open');setTimeout(()=>document.getElementById('catInput').focus(),50);}
-function closeCatModal(){document.getElementById('catModal').classList.remove('open');document.getElementById('catInput').value='';}
+// ═══ CATEGORIES ════════════════════════════════════════
+function openCatModal(){
+  editingCatName=null;
+  pickedColor='#9147ff';
+  document.getElementById('catModalTitle').textContent='Nouvelle catégorie';
+  document.getElementById('catModalBtn').textContent='Créer';
+  document.getElementById('catInput').value='';
+  renderColorPicker();
+  document.getElementById('customColor').value=pickedColor;
+  document.getElementById('catModal').classList.add('open');
+  setTimeout(()=>document.getElementById('catInput').focus(),50);
+}
+function openEditCatModal(name){
+  const cat=categories.find(c=>c.name===name);if(!cat)return;
+  editingCatName=name;
+  pickedColor=cat.color;
+  document.getElementById('catModalTitle').textContent='Modifier la catégorie';
+  document.getElementById('catModalBtn').textContent='Sauvegarder';
+  document.getElementById('catInput').value=name;
+  renderColorPicker();
+  document.getElementById('customColor').value=pickedColor;
+  document.getElementById('catModal').classList.add('open');
+  setTimeout(()=>document.getElementById('catInput').focus(),50);
+}
+function closeCatModal(){document.getElementById('catModal').classList.remove('open');editingCatName=null;}
 function renderColorPicker(){document.getElementById('cpicker').innerHTML=PRESET_COLORS.map(c=>`<div class="cswatch${c===pickedColor?' sel':''}" style="background:${c}" onclick="pickColor('${c}')"></div>`).join('');}
 function pickColor(c){pickedColor=c;document.getElementById('customColor').value=c;renderColorPicker();}
 function setCustomColor(c){pickedColor=c;renderColorPicker();}
-function addCategory(){const v=document.getElementById('catInput').value.trim();if(!v||categories.find(c=>c.name===v)){closeCatModal();return;}categories.push({name:v,color:pickedColor});saveAll();closeCatModal();renderTabs();}
-document.getElementById('catInput').addEventListener('keydown',e=>{if(e.key==='Enter')addCategory();if(e.key==='Escape')closeCatModal();});
+
+function submitCatModal(){
+  const v=document.getElementById('catInput').value.trim();if(!v)return;
+  if(editingCatName){
+    // Edit existing
+    const idx=categories.findIndex(c=>c.name===editingCatName);
+    if(idx<0){closeCatModal();return;}
+    const oldName=editingCatName;
+    categories[idx]={name:v,color:pickedColor};
+    // Update streamerCats
+    for(const sname of streamers){
+      const cats=streamerCats[sname]||[];
+      const ci=cats.indexOf(oldName);if(ci>=0){cats[ci]=v;streamerCats[sname]=cats;}
+    }
+    if(activeTab===oldName)activeTab=v;
+  }else{
+    if(categories.find(c=>c.name===v)){closeCatModal();return;}
+    categories.push({name:v,color:pickedColor});
+  }
+  saveAll();closeCatModal();renderTabs();render();
+}
+
+function deleteCategory(name){
+  categories=categories.filter(c=>c.name!==name);
+  for(const sname of streamers){streamerCats[sname]=(streamerCats[sname]||[]).filter(c=>c!==name);}
+  if(activeTab===name)activeTab='Tous';
+  saveAll();renderTabs();render();
+}
+
+document.getElementById('catInput').addEventListener('keydown',e=>{if(e.key==='Enter')submitCatModal();if(e.key==='Escape')closeCatModal();});
 document.getElementById('catModal').addEventListener('click',e=>{if(e.target===document.getElementById('catModal'))closeCatModal();});
 document.getElementById('nameInput').addEventListener('keydown',e=>{if(e.key==='Enter')addStreamer();if(e.key==='Escape')closeAddModal();});
 document.getElementById('addModal').addEventListener('click',e=>{if(e.target===document.getElementById('addModal'))closeAddModal();});
 
-// ── SIDE PANEL ────────────────────────────────────────
+// ═══ SIDE PANEL ════════════════════════════════════════
 function fmtDur(s){const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),sec=s%60;return h>0?`${h}h${String(m).padStart(2,'0')}m`:`${m}m${String(sec).padStart(2,'0')}s`;}
 function parseDur(str){if(!str)return 0;let s=0;const hm=str.match(/(\d+)h/);const mm=str.match(/(\d+)m/);const sm=str.match(/(\d+)s/);if(hm)s+=parseInt(hm[1])*3600;if(mm)s+=parseInt(mm[1])*60;if(sm)s+=parseInt(sm[1]);return s;}
 function fmtDate(d){return new Date(d).toLocaleDateString('fr-FR',{day:'2-digit',month:'short',year:'numeric'});}
@@ -619,8 +816,17 @@ function fmtViews(n){return n>=1000?(n/1000).toFixed(1).replace('.0','')+'K':Str
 async function openSidePanel(name){
   spStreamer=name;spTab='vods';
   const d=streamData[name]||{};
-  document.getElementById('sp-avimg').src=d.avatar||'';
-  document.getElementById('sp-title').textContent=d.displayName||name;
+  const ukey=name.toLowerCase();
+  const avatar=d.avatar||(userData[ukey]?.avatar||'');
+  const banner=d.banner||(userData[ukey]?.banner||'');
+  const displayName=d.displayName||(userData[ukey]?.displayName||name);
+  // Set header
+  document.getElementById('sp-avimg').src=avatar;
+  document.getElementById('sp-name').textContent=displayName;
+  document.getElementById('sp-link').href='https://twitch.tv/'+name.toLowerCase();
+  const bannerEl=document.getElementById('sp-banner');
+  if(banner){bannerEl.src=banner;bannerEl.parentElement.style.background='';}
+  else{bannerEl.src='';bannerEl.parentElement.style.background='var(--bg4)';}
   document.getElementById('tab-vods').className='sp-tab active';
   document.getElementById('tab-clips').className='sp-tab';
   document.getElementById('sidePanel').classList.add('open');
@@ -629,39 +835,85 @@ async function openSidePanel(name){
 function closeSidePanel(){document.getElementById('sidePanel').classList.remove('open');spStreamer=null;}
 function switchSpTab(tab){spTab=tab;document.getElementById('tab-vods').className='sp-tab'+(tab==='vods'?' active':'');document.getElementById('tab-clips').className='sp-tab'+(tab==='clips'?' active':'');if(!spStreamer)return;tab==='vods'?loadVods(spStreamer):loadClips(spStreamer);}
 
+async function getUserId(name){
+  const ukey=name.toLowerCase();
+  if(userData[ukey]?.userId)return userData[ukey].userId;
+  // Try to get from streamData
+  if(streamData[name]?.userId)return streamData[name].userId;
+  // Fetch
+  try{
+    const r=await tGet(`https://api.twitch.tv/helix/users?login=${encodeURIComponent(ukey)}`);
+    if(r.data[0]){
+      const u=r.data[0];
+      userData[ukey]={userId:u.id,displayName:u.display_name,avatar:u.profile_image_url,banner:u.offline_image_url||''};
+      saveAll();return u.id;
+    }
+  }catch(e){}
+  return null;
+}
+
 async function loadVods(name){
   const body=document.getElementById('sp-body');
   body.innerHTML='<div class="sp-loading"><div class="ldot"></div><div class="ldot"></div><div class="ldot"></div> Chargement des VODs...</div>';
   try{
-    const d=streamData[name];if(!d?.userId)throw new Error('no uid');
-    const r=await tGet(`https://api.twitch.tv/helix/videos?user_id=${d.userId}&type=archive&first=20`);
-    if(!r.data.length){body.innerHTML='<div style="padding:20px;text-align:center;font-size:13px;color:var(--t3)">Aucune rediffusion disponible.</div>';return;}
+    const userId=await getUserId(name);
+    if(!userId)throw new Error('no userId');
+    const r=await tGet(`https://api.twitch.tv/helix/videos?user_id=${userId}&type=archive&first=20`);
+    if(!r.data||!r.data.length){body.innerHTML='<div style="padding:20px;text-align:center;font-size:13px;color:var(--t3)">Aucune rediffusion disponible.<br><span style="font-size:11px">Le streamer a peut-être désactivé les VODs.</span></div>';return;}
     body.innerHTML=r.data.map(v=>{
-      const thumb=v.thumbnail_url.replace('%{width}','440').replace('%{height}','248');
+      // VOD thumbnail: Twitch uses %{width} and %{height} as template
+      const rawThumb=v.thumbnail_url||'';
+      const thumb=rawThumb.replace(/%\{width\}/g,'440').replace(/%\{height\}/g,'248').replace(/\{width\}/g,'440').replace(/\{height\}/g,'248');
       const dur=v.duration?fmtDur(parseDur(v.duration)):'';
-      const safeTitle=v.title.replace(/'/g,"\\'").replace(/"/g,'&quot;');
-      const safeDate=v.created_at;
-      const safeDur=v.duration||'';
-      return`<div class="vod-card"><div class="vod-thumb" onclick="playVod('${v.id}','${name}')">${thumb&&!thumb.includes('%')?`<img src="${thumb}" alt="" onerror="this.style.display='none'">`:'<div style="width:100%;height:100%;background:var(--bg4);display:flex;align-items:center;justify-content:center;color:var(--t3);font-size:11px">Aperçu indisponible</div>'}${dur?`<span class="vod-dur">${dur}</span>`:''}<div class="plov"><div class="plc"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="#fff"/></svg></div></div></div><div class="vod-info"><div class="vod-title">${v.title}</div><div class="vod-meta">${fmtDate(v.created_at)} · ${fmtViews(v.view_count)} vues</div></div><div id="ai-${v.id}" class="ai-box"></div><div class="vod-actions"><button class="va-btn" onclick="playVod('${v.id}','${name}')">▶ Regarder</button><button class="va-btn dl" onclick="dlVod('${v.url}','${name}')">⬇ Télécharger</button><button class="va-btn" onclick="summarizeVod('${v.id}','${safeTitle}','${safeDate}','${safeDur}','${name}')">✦ Résumé IA</button></div></div>`;
+      const safeTitle=(v.title||'').replace(/'/g,"\\'").replace(/"/g,'&quot;');
+      return`<div class="vod-card">
+        <div class="vod-thumb" onclick="playVod('${v.id}','${name}')">
+          ${thumb&&!thumb.includes('%{')&&!thumb.includes('404')?`<img src="${thumb}" alt="" onerror="this.style.display='none'">`:`<div style="width:100%;height:100%;background:var(--bg4);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px"><svg width="32" height="32" viewBox="0 0 24 24" fill="var(--t3)" opacity=".4"><path d="M21 3H3v18l4-4h14V3zm-10 8H9V7h2v4zm4 0h-2V7h2v4z"/></svg><span style="font-size:10px;color:var(--t3)">Aperçu indisponible</span></div>`}
+          ${dur?`<span class="vod-dur">${dur}</span>`:''}
+          <div class="vod-plov"><div class="plc"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="#fff"/></svg></div></div>
+        </div>
+        <div class="vod-info"><div class="vod-title">${v.title||'Sans titre'}</div><div class="vod-meta">${fmtDate(v.created_at)} · ${fmtViews(v.view_count)} vues · ${dur}</div></div>
+        <div id="ai-${v.id}" class="ai-box"></div>
+        <div class="vod-actions">
+          <button class="va-btn" onclick="playVod('${v.id}','${name}')">▶ Regarder</button>
+          <button class="va-btn dl" onclick="dlVod('${encodeURIComponent(v.url||'https://twitch.tv/videos/'+v.id)}','${name}')">⬇ Télécharger</button>
+          <button class="va-btn" onclick="summarizeVod('${v.id}','${safeTitle}','${v.created_at}','${v.duration||''}','${name}')">✦ Résumé IA</button>
+        </div>
+      </div>`;
     }).join('');
-  }catch(e){body.innerHTML='<div style="padding:20px;text-align:center;font-size:13px;color:var(--t3)">Impossible de charger les VODs.<br>Le streamer a peut-être désactivé les rediffusions.</div>';}
+  }catch(e){
+    body.innerHTML=`<div style="padding:20px;text-align:center;font-size:13px;color:var(--t3)">Impossible de charger les VODs.<br><span style="font-size:11px;opacity:.7">${e.message}</span></div>`;
+  }
 }
 
 async function loadClips(name){
   const body=document.getElementById('sp-body');
   body.innerHTML='<div class="sp-loading"><div class="ldot"></div><div class="ldot"></div><div class="ldot"></div> Chargement des clips...</div>';
   try{
-    const d=streamData[name];if(!d?.userId)throw new Error('no uid');
-    const r=await tGet(`https://api.twitch.tv/helix/clips?broadcaster_id=${d.userId}&first=20`);
-    if(!r.data.length){body.innerHTML='<div style="padding:20px;text-align:center;font-size:13px;color:var(--t3)">Aucun clip disponible.</div>';return;}
-    body.innerHTML=r.data.map(c=>`<div class="clip-card" onclick="window.open('${c.url}','_blank')"><div class="vod-thumb"><img src="${c.thumbnail_url}" alt=""><span class="vod-dur">${c.duration}s</span><div class="plov"><div class="plc"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="#fff"/></svg></div></div></div><div class="vod-info"><div class="vod-title">${c.title}</div><div class="vod-meta">${fmtViews(c.view_count)} vues · ${fmtDate(c.created_at)} · par ${c.creator_name}</div></div><div class="vod-actions"><button class="va-btn" onclick="event.stopPropagation();window.open('${c.url}','_blank')">▶ Regarder sur Twitch ↗</button></div></div>`).join('');
-  }catch(e){body.innerHTML='<div style="padding:20px;text-align:center;font-size:13px;color:var(--t3)">Impossible de charger les clips.</div>';}
+    const userId=await getUserId(name);
+    if(!userId)throw new Error('no userId');
+    const r=await tGet(`https://api.twitch.tv/helix/clips?broadcaster_id=${userId}&first=20`);
+    if(!r.data||!r.data.length){body.innerHTML='<div style="padding:20px;text-align:center;font-size:13px;color:var(--t3)">Aucun clip disponible.</div>';return;}
+    body.innerHTML=r.data.map(c=>`
+      <div class="vod-card" onclick="window.open('${c.url}','_blank')" style="cursor:pointer">
+        <div class="vod-thumb">
+          <img src="${c.thumbnail_url}" alt="" onerror="this.style.display='none'">
+          <span class="vod-dur">${Math.round(c.duration)}s</span>
+          <div class="vod-plov"><div class="plc"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="#fff"/></svg></div></div>
+        </div>
+        <div class="vod-info"><div class="vod-title">${c.title||'Clip'}</div><div class="vod-meta">${fmtViews(c.view_count)} vues · ${fmtDate(c.created_at)} · par ${c.creator_name}</div></div>
+        <div class="vod-actions"><button class="va-btn" onclick="event.stopPropagation();window.open('${c.url}','_blank')">▶ Voir sur Twitch ↗</button></div>
+      </div>`).join('');
+  }catch(e){body.innerHTML=`<div style="padding:20px;text-align:center;font-size:13px;color:var(--t3)">Impossible de charger les clips.<br><span style="font-size:11px;opacity:.7">${e.message}</span></div>`;}
 }
 
 function playVod(vodId,name){
-  const d=streamData[name]||{};const parent=location.hostname||'localhost';
-  document.getElementById('pAvImg').src=d.avatar||'';
-  document.getElementById('pName').textContent=d.displayName||name;
+  const d=streamData[name]||{};const ukey=name.toLowerCase();
+  const avatar=d.avatar||(userData[ukey]?.avatar||'');
+  const displayName=d.displayName||(userData[ukey]?.displayName||name);
+  const parent=location.hostname||'localhost';
+  document.getElementById('pAvImg').src=avatar;
+  document.getElementById('pName').textContent=displayName;
   document.getElementById('pMeta').textContent='Rediffusion';
   const badge=document.getElementById('pLiveBadge');badge.style.background='#6441a5';badge.textContent='VOD';
   document.getElementById('pvwWrap').style.display='none';
@@ -670,36 +922,33 @@ function playVod(vodId,name){
   document.getElementById('chatFrame').src=`https://www.twitch.tv/embed/${name.toLowerCase()}/chat?parent=${parent}&darkpopout`;
   document.getElementById('pov').classList.add('open');document.body.style.overflow='hidden';currentPlayer='vod:'+vodId;
 }
-function dlVod(url,name){if(confirm(`Pour télécharger cette VOD :\n\nUtilise Streamlink (gratuit) :\nstreamlink "${url}" best -o "${name}_vod.ts"\n\nOuvrir la page Streamlink ?`))window.open('https://github.com/streamlink/streamlink','_blank');}
+function dlVod(encodedUrl,name){const url=decodeURIComponent(encodedUrl);if(confirm(`Pour télécharger cette VOD :\n\nUtilise Streamlink (gratuit) :\nstreamlink "${url}" best -o "${name}_vod.ts"\n\nOuvrir la page Streamlink ?`))window.open('https://github.com/streamlink/streamlink','_blank');}
 
-// ── GEMINI AI SUMMARY ─────────────────────────────────
+// ═══ GEMINI AI ═════════════════════════════════════════
 async function summarizeVod(vodId,title,date,duration,streamerName){
   const box=document.getElementById('ai-'+vodId);if(!box)return;
-  if(!geminiKey){openGeminiKeyModal();return;}
   box.className='ai-box show';
-  box.innerHTML='<strong>✦ Résumé IA <span class="gemini-badge">Gemini</span></strong><span style="color:var(--t3)">Génération en cours...</span>';
-  const d=streamData[streamerName]||{};
-  const prompt=`Tu es un assistant qui résume des rediffusions Twitch. Génère un résumé court et informatif (3-4 phrases max) en français de cette VOD :\n\nStreamer : ${d.displayName||streamerName}\nTitre : ${title}\nDate : ${date}\nDurée : ${duration||'inconnue'}\n\nFais un résumé concis basé sur le titre et les infos disponibles. Sois direct et utile.`;
+  box.innerHTML='<div class="ai-box-title">✦ Résumé IA <span class="gbadge">Gemini</span></div><span style="color:var(--t3)">Génération en cours...</span>';
+  const ukey=streamerName.toLowerCase();
+  const displayName=streamData[streamerName]?.displayName||(userData[ukey]?.displayName||streamerName);
+  const prompt=`Tu es un assistant qui résume des rediffusions Twitch. Génère un résumé court (3-4 phrases max) en français de cette VOD :\n\nStreamer : ${displayName}\nTitre : ${title}\nDate : ${date}\nDurée : ${duration||'inconnue'}\n\nFais un résumé concis et utile basé sur le titre. Sois direct.`;
   try{
-    const r=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiKey}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{maxOutputTokens:300,temperature:0.7}})});
+    const r=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_KEY}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{maxOutputTokens:300,temperature:0.7}})});
     const data=await r.json();
     if(data.error)throw new Error(data.error.message);
     const text=data.candidates?.[0]?.content?.parts?.[0]?.text||'Impossible de générer un résumé.';
-    box.innerHTML=`<strong>✦ Résumé IA <span class="gemini-badge">Gemini</span></strong>${text}`;
-  }catch(e){
-    box.innerHTML=`<strong>✦ Résumé IA <span class="gemini-badge">Gemini</span></strong><span style="color:#ff5555">Erreur : ${e.message||'Vérifie ta clé API Gemini.'}</span>`;
-  }
+    box.innerHTML=`<div class="ai-box-title">✦ Résumé IA <span class="gbadge">Gemini</span></div>${text}`;
+  }catch(e){box.innerHTML=`<div class="ai-box-title">✦ Résumé IA <span class="gbadge">Gemini</span></div><span style="color:#ff5555">Erreur : ${e.message}</span>`;}
 }
-function openGeminiKeyModal(){document.getElementById('geminiKeyInput').value=geminiKey;document.getElementById('geminiKeyModal').classList.add('open');setTimeout(()=>document.getElementById('geminiKeyInput').focus(),50);}
-function closeGeminiKeyModal(){document.getElementById('geminiKeyModal').classList.remove('open');}
-function saveGeminiKey(){geminiKey=document.getElementById('geminiKeyInput').value.trim();localStorage.setItem('fbwl_geminikey',geminiKey);closeGeminiKeyModal();}
-document.getElementById('geminiKeyModal').addEventListener('click',e=>{if(e.target===document.getElementById('geminiKeyModal'))closeGeminiKeyModal();});
 
-// ── PLAYER ────────────────────────────────────────────
+// ═══ PLAYER ════════════════════════════════════════════
 function openPlayer(name){
-  const d=streamData[name]||{};const parent=location.hostname||'localhost';
-  document.getElementById('pAvImg').src=d.avatar||'';
-  document.getElementById('pName').textContent=d.displayName||name;
+  const d=streamData[name]||{};const ukey=name.toLowerCase();
+  const avatar=d.avatar||(userData[ukey]?.avatar||'');
+  const displayName=d.displayName||(userData[ukey]?.displayName||name);
+  const parent=location.hostname||'localhost';
+  document.getElementById('pAvImg').src=avatar;
+  document.getElementById('pName').textContent=displayName;
   document.getElementById('pMeta').textContent=(d.game||'')+(d.title?' — '+d.title:'');
   const badge=document.getElementById('pLiveBadge');badge.style.background='var(--live)';badge.textContent='LIVE';
   document.getElementById('pvwWrap').style.display='flex';
@@ -713,34 +962,58 @@ function openPlayer(name){
 function closePlayer(){document.getElementById('pov').classList.remove('open');document.getElementById('pstream').innerHTML='';document.getElementById('chatFrame').src='';document.body.style.overflow='';currentPlayer=null;}
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&currentPlayer)closePlayer();});
 
-// ── IMPORT ────────────────────────────────────────────
+// ═══ IMPORT FOLLOWS ════════════════════════════════════
 async function openImport(){
   document.getElementById('importModal').classList.add('open');
   document.getElementById('importContent').innerHTML='<div class="sp-loading"><div class="ldot"></div><div class="ldot"></div><div class="ldot"></div></div>';
   document.getElementById('importBtns').style.display='none';document.getElementById('importClose').style.display='none';
-  importSel=new Set();
+  importSel=new Set();importFollowsData=[];
   try{
     let follows=[],cursor=null;
     do{const r=await tGet(`https://api.twitch.tv/helix/channels/followed?user_id=${user.id}&first=100${cursor?'&after='+cursor:''}`);follows=follows.concat(r.data);cursor=r.pagination?.cursor;}while(cursor&&follows.length<500);
     const existing=new Set(streamers.map(s=>s.toLowerCase()));
     const newF=follows.filter(f=>!existing.has(f.broadcaster_login.toLowerCase()));
     if(!newF.length){document.getElementById('importContent').innerHTML='<div style="padding:20px;text-align:center;font-size:13px;color:var(--t3)">Tu suis déjà tous tes follows !</div>';document.getElementById('importClose').style.display='flex';return;}
-    const q=newF.slice(0,100).map(f=>'user_login='+f.broadcaster_login).join('&');
+    // Fetch avatars + live status
+    const chunks=[];for(let i=0;i<Math.min(newF.length,100);i+=100)chunks.push(newF.slice(i,i+100));
     let liveSet=new Set(),avMap={};
+    const q=newF.slice(0,100).map(f=>'user_login='+f.broadcaster_login).join('&');
     try{const[sr,ur]=await Promise.all([tGet(`https://api.twitch.tv/helix/streams?${q}&first=100`),tGet(`https://api.twitch.tv/helix/users?${q}`)]);sr.data.forEach(s=>liveSet.add(s.user_login.toLowerCase()));ur.data.forEach(u=>avMap[u.login.toLowerCase()]=u.profile_image_url);}catch(e){}
+    importFollowsData=newF;
     importSel=new Set(newF.map(f=>f.broadcaster_login));
-    document.getElementById('importContent').innerHTML=`<div class="imp-bar"><span style="font-size:11px;color:var(--t3)">${newF.length} follows non ajoutés</span><div style="display:flex;gap:8px"><button onclick="selAllImp(true)">Tout sélect.</button><button onclick="selAllImp(false)">Tout désélect.</button></div></div><div class="imp-list">${newF.map(f=>`<div class="imp-item" onclick="toggleImp('${f.broadcaster_login}')"><input type="checkbox" id="ic_${f.broadcaster_login}" checked onchange="toggleImpChk('${f.broadcaster_login}',this.checked)"><div class="imp-av"><img src="${avMap[f.broadcaster_login.toLowerCase()]||''}" alt=""></div><span style="font-size:12px;color:var(--t);flex:1">${f.broadcaster_name}</span>${liveSet.has(f.broadcaster_login.toLowerCase())?'<span class="imp-live"></span>':''}</div>`).join('')}</div>`;
+    renderImportList(newF,liveSet,avMap);
     document.getElementById('importBtns').style.display='flex';
-  }catch(e){document.getElementById('importContent').innerHTML='<div style="padding:20px;text-align:center;font-size:13px;color:var(--t3)">Erreur de chargement des follows.</div>';document.getElementById('importClose').style.display='flex';}
+  }catch(e){document.getElementById('importContent').innerHTML=`<div style="padding:20px;text-align:center;font-size:13px;color:var(--t3)">Erreur : ${e.message}</div>`;document.getElementById('importClose').style.display='flex';}
 }
-function toggleImp(l){importSel.has(l)?importSel.delete(l):importSel.add(l);const c=document.getElementById('ic_'+l);if(c)c.checked=importSel.has(l);}
-function toggleImpChk(l,v){v?importSel.add(l):importSel.delete(l);}
-function selAllImp(v){document.querySelectorAll('[id^="ic_"]').forEach(c=>{const l=c.id.replace('ic_','');v?importSel.add(l):importSel.delete(l);c.checked=v;});}
+
+function renderImportList(follows,liveSet,avMap){
+  document.getElementById('importContent').innerHTML=`
+    <div class="imp-bar"><span>${follows.length} follows non ajoutés</span><div style="display:flex;gap:8px"><button onclick="selAllImp(true)">Tout sélect.</button><button onclick="selAllImp(false)">Tout désélect.</button></div></div>
+    <div class="imp-list" id="impList">${follows.map(f=>{
+      const sel=importSel.has(f.broadcaster_login);
+      const isLive=liveSet.has(f.broadcaster_login.toLowerCase());
+      const av=avMap[f.broadcaster_login.toLowerCase()]||'';
+      return`<div class="imp-row${sel?' sel':''}" id="improw_${f.broadcaster_login}" onclick="toggleImp('${f.broadcaster_login}')">
+        <div class="imp-chk"></div>
+        <div class="imp-av"><img src="${av}" alt="" onerror="this.style.display='none'"></div>
+        <span style="font-size:12px;color:var(--t);flex:1">${f.broadcaster_name}</span>
+        ${isLive?'<span class="imp-live-dot"></span>':''}
+      </div>`;
+    }).join('')}</div>`;
+}
+function toggleImp(login){
+  const row=document.getElementById('improw_'+login);
+  if(importSel.has(login)){importSel.delete(login);row&&row.classList.remove('sel');}
+  else{importSel.add(login);row&&row.classList.add('sel');}
+}
+function selAllImp(v){
+  importFollowsData.forEach(f=>{v?importSel.add(f.broadcaster_login):importSel.delete(f.broadcaster_login);const row=document.getElementById('improw_'+f.broadcaster_login);if(row){v?row.classList.add('sel'):row.classList.remove('sel');}});
+}
 async function confirmImport(){for(const l of importSel){if(!streamers.map(s=>s.toLowerCase()).includes(l.toLowerCase()))streamers.push(l);}saveAll();closeImport();await refreshData();}
 function closeImport(){document.getElementById('importModal').classList.remove('open');}
 document.getElementById('importModal').addEventListener('click',e=>{if(e.target===document.getElementById('importModal'))closeImport();});
 
-// ── THEME / UI ────────────────────────────────────────
+// ═══ THEME / UI ════════════════════════════════════════
 function applyTheme(){document.body.className=isDark?'dark':'light';const lbl=document.getElementById('themeLabel');if(lbl)lbl.textContent=isDark?'Mode clair':'Mode sombre';}
 function toggleTheme(){isDark=!isDark;localStorage.setItem('fbwl_theme',isDark?'dark':'light');applyTheme();}
 function toggleDd(){closeNotif();document.getElementById('dd').classList.toggle('open');}
